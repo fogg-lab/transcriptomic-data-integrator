@@ -7,7 +7,7 @@ A collection of convenience functions to search, retrieve, and prepare transcrip
 
 ## Setup
 
-Run the below commands in any terminal (Linux, Mac, Windows Powershell or CMD). Replace dummy email with your email which will be submitted with your queries to the NCBI API (if you're working with GEO).
+Run the below commands in any terminal (Linux, Mac, Windows Powershell or CMD). Replace dummy email with your email which will be submitted with your queries to the NCBI API (if you're querying GEO).
 ```zsh
 git clone https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval.git
 cd transcriptomics-data-query-and-retrieval
