@@ -1,0 +1,9 @@
+name: transcriptomics_data_query
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pandas
+  - biopython
+  - pip:
+    - GEOparse
