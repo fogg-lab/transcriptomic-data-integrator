@@ -9,10 +9,12 @@ setup(
     package_dir={"": "src"},
     install_requires=[
         "biopython",
-        "GEOparse"
+        "GEOparse",
+        "pandas",
+        "requests",
     ],
     package_data={
-        "mypackage": ["email_for_ncbi_tracking.txt"],
+        PACKAGE_NAME: ["email_for_ncbi_tracking.txt"],
     },
     include_package_data=True,
     entry_points={
