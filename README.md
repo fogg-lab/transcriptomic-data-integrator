@@ -3,7 +3,6 @@ A collection of convenience functions to search, retrieve, and prepare transcrip
 
 ## Prerequisites
 - Python 3.7 or higher
-- Conda is optional
 
 ## Setup
 
