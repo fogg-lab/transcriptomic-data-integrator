@@ -1,17 +1,33 @@
-import pkg_resources
 import subprocess
+import shutil
+
+import pkg_resources
 import requests
+import pandas as pd
 
 
 CORE_MATRISOME_URL = "https://www.gsea-msigdb.org/gsea/msigdb/human/download_geneset.jsp?geneSetName=NABA_CORE_MATRISOME&fileType=json"
 ALL_MATRISOME_URL = "https://www.gsea-msigdb.org/gsea/msigdb/human/download_geneset.jsp?geneSetName=NABA_MATRISOME&fileType=json"
 
 
-def rma_normalization_r(input_dir, output_file):
+def rma_normalization_r(input_dir, output_file, remove_cel_dir=False):
+    """Perform RMA normalization on raw data (directory containing CEL files).
+
+    Parameters
+    ----------
+    input_dir : str
+        Path to the directory containing CEL files.
+    output_file : str
+        Path to the output file.
+    remove_cel_dir : bool, optional
+        If True, remove the directory containing CEL files after normalization, default is False.
+
+    """
     r_script_path = pkg_resources.resource_filename('transcriptomics_data_query',
                                                     'rscripts/rma_normalization.R')
     subprocess.run(["Rscript", r_script_path, input_dir, output_file], check=True)
-
+    if remove_cel_dir:
+        shutil.rmtree(input_dir)
 
 def get_genes_from_file(filename):
     """
@@ -62,16 +78,16 @@ def get_matrisome_genes(core_matrisome_only=False):
     return matrisome_genes
 
 
-def select_rows(df, column, values):
+def select_rows(df, values, column=None):
     """
     Parameters
     ----------
     df : pandas.DataFrame
         The data frame.
-    column : str
-        The column name (e.g., "gene_symbol").
     values : list
         The values to select (e.g., ["A2M","A2ML1","ABI3BP"]).
+    column : str, optional
+        The column name (e.g., "gene_symbol"). If None, the index is used.
     Returns
     -------
     pandas.DataFrame
@@ -80,13 +96,37 @@ def select_rows(df, column, values):
     Example
     -------
     >>> import transcriptomics_data_query as tdq
-    >>> df = pd.DataFrame({"symbol": ["A1BG", "A2M", "CA10", "SEMA6B"]})
+    >>> expression_df = pd.DataFrame({"GSM1234": [3.452, 4.123, 5.678, 6.789],
+                                      "GSM5678": [1.234, 2.345, 3.456, 4.567]})
+    >>> expression_df.index = ["A1BG", "A2M", "CA10", "SEMA6B"]
+    >>> expression_df.index.name = "symbol"
     >>> matrisome_genes = tdq.preprocess.get_matrisome_genes()
-    >>> df_matrisome = tdq.preprocess.select_rows(df, "symbol", matrisome_genes)
-    >>> df_matrisome
-        symbol
-    0   A2M
-    1   SEMA6B
+    >>> matrisome_expression_df = tdq.preprocess.select_rows(expression_df, matrisome_genes)
+    >>> matrisome_expression_df
+            GSM1234 GSM5678
+    symbol
+       A2M    4.123   2.345
+    SEMA6B    6.789   4.567
 
     """
+    if column is None:
+        return df.loc[df.index.isin(values)]
+
     return df[df[column].isin(values)]
+
+
+def drop_nan_row_indices(expr_df: pd.DataFrame):
+    """ Drop rows where the row index is NaN.
+
+    Parameters
+    ----------
+    expr_df : pandas.DataFrame
+        The expression matrix.
+
+    Returns
+    -------
+    pandas.DataFrame
+        The expression matrix with NaN rows dropped.
+
+    """
+    return expr_df.loc[expr_df.index.dropna()]

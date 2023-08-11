@@ -1,16 +1,16 @@
 import re
 from functools import wraps
 from urllib.error import HTTPError
-import tarfile
-import gzip
 import os
 import shutil
 
 import pkg_resources
+import pandas as pd
 from Bio import Entrez
 import GEOparse
 import requests
 
+from . import util
 
 def get_entrez_email():
     """
@@ -257,7 +257,7 @@ def search_geo(query, db="gds", max_results=25, exception_on_http_error=False,
         return []
 
 
-def download_raw_data(accession, output_dir=".", timeout=300):
+def download_raw_data(accession, output_dir=None, timeout=10):
     """
     Parameters
     ----------
@@ -267,12 +267,15 @@ def download_raw_data(accession, output_dir=".", timeout=300):
         The directory to save the raw data.
     timeout : int
         The timeout in seconds for the HTTP request.
-    Returns
-    -------
-    list
-        Paths to decompressed CEL files.
 
     """
+    if output_dir is None:
+        output_dir = os.path.join(os.getcwd(), accession)
+
+    # Create output directory if it does not exist
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
     url = f"https://www.ncbi.nlm.nih.gov/geo/download/?acc={accession}&format=file"
     file_path = os.path.join(output_dir, f"{accession}.tar")
 
@@ -280,21 +283,7 @@ def download_raw_data(accession, output_dir=".", timeout=300):
         with open(file_path, 'wb') as file:
             shutil.copyfileobj(response.raw, file)
 
-    with tarfile.open(file_path, 'r') as tar:
-        tar.extractall(path=accession)
-
-    cel_files = []
-    for root, _, files in os.walk(accession):
-        for file in files:
-            if file.lower().endswith('.cel.gz'):
-                gz_path = os.path.join(root, file)
-                cel_path = os.path.splitext(gz_path)[0]
-                with gzip.open(gz_path, 'rb') as gz_file:
-                    with open(cel_path, 'wb') as cel_file:
-                        shutil.copyfileobj(gz_file, cel_file)
-                cel_files.append(cel_path)
-
-    return cel_files
+    util.extract_tar(file_path, output_dir, delete_tar=True)
 
 
 def map_probes_to_genes(expression_data, accession):
@@ -305,18 +294,65 @@ def map_probes_to_genes(expression_data, accession):
         Expression data.
     accession : str
         The GEO accession.
+
     Returns
     -------
     pandas.DataFrame
         Expression data with probes mapped to genes.
 
+    Warning about function behavior
+    -------
+    - When multiple genes map to the same probe, the expression values are duplicated.
+    - When multiple probes map to the same gene, the expression values are averaged.
+
+    You may want to modify the behavior of this function to implement a different strategy.
     """
     gse = GEOparse.get_GEO(geo=accession)
     platform_id = gse.gpls[list(gse.gpls.keys())[0]].get_accession()
     gpl = GEOparse.get_GEO(geo=platform_id)
     annotation = {row['ID']: row['Gene Symbol'] for _, row in gpl.table.iterrows()}
-    expression_data.index = expression_data.index.map(annotation)
+    expression_data.index = expression_data.index.map(lambda probe: annotation.get(probe, probe))
+    expression_data = expression_data.loc[expression_data.index.dropna()]
 
-    # TODO: Drop NaNs and resolve duplicates
+    # DUPLICATION STEP
+    # for probes with multiple genes, make one row per gene with the same expression values
+    expanded_genes = []
+    expanded_expression = []
+    for probe, values in expression_data.iterrows():
+        genes = probe.split(' /// ')
+        for gene in genes:
+            expanded_genes.append(gene)
+            expanded_expression.append(values.tolist())
+    expanded_expression_df = pd.DataFrame(expanded_expression, index=expanded_genes,
+                                          columns=expression_data.columns)
 
-    return expression_data
+    # AGGREGATION STEP
+    # for genes with multiple probes, take the mean of the probes
+    aggregated_expression_df = expanded_expression_df.groupby(expanded_expression_df.index).mean()
+
+    aggregated_expression_df.index.name = 'symbol'
+
+    return aggregated_expression_df
+
+
+def extract_gsm(column_name: str):
+    """Extract a GSM sample name from a given string, or return the original string if not found."""
+    return re.search(r'GSM[0-9]+', column_name).group(0) or column_name
+
+
+def clean_geo_sample_columns(expr_df: pd.DataFrame):
+    """
+    Clean the sample columns of a GEO expression matrix.
+
+    Parameters
+    ----------
+    expr_df : pandas.DataFrame
+        The expression matrix.
+
+    Returns
+    -------
+    pandas.DataFrame
+        The expression matrix with cleaned sample columns.
+
+    """
+    return expr_df.rename(columns=extract_gsm)
