@@ -1,5 +1,5 @@
 # transcriptomics-data-query-and-retrieval
-A collection of convenience functions to search, retrieve, and prepare transcriptomics data from GEO and GDC.
+Search, retrieve, and prepare transcriptomics data from GEO and GDC (development in progress).
 
 ## Prerequisites
 - Python 3.7 or higher.
