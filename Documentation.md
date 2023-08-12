@@ -1,28 +1,14 @@
 <!-- markdownlint-disable -->
 
-<style>
-  .collapsible-section {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-  }
-
-  .collapsible-title {
-    cursor: pointer;
-    color: #007bff;
-    font-weight: bold;
-    margin: -10px;
-    padding: 10px;
-  }
-</style>
 
 <a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 # <kbd>module</kbd> `transcriptomics_data_query.geo`
 
 
-<details class="collapsible-section">
-  <summary class="collapsible-title">Expand section</summary>
+<details class="collapsible-section" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px;">
+  <summary class="collapsible-title" style="cursor: pointer; color: #007bff; font-weight: bold; margin: -10px; padding: 10px;">Expand section</summary>
+
 
 
 ---
@@ -388,8 +374,9 @@ Clean the sample columns of a GEO expression matrix.
 # <kbd>module</kbd> `transcriptomics_data_query.preprocess`
 
 
-<details class="collapsible-section">
-  <summary class="collapsible-title">Expand section</summary>
+<details class="collapsible-section" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px;">
+  <summary class="collapsible-title" style="cursor: pointer; color: #007bff; font-weight: bold; margin: -10px; padding: 10px;">Expand section</summary>
+
 
 ---
 
@@ -545,8 +532,8 @@ Drop rows where the row index is NaN.
 # <kbd>module</kbd> `transcriptomics_data_query.util`
 
 
-<details class="collapsible-section">
-  <summary class="collapsible-title">Expand section</summary>
+<details class="collapsible-section" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px;">
+  <summary class="collapsible-title" style="cursor: pointer; color: #007bff; font-weight: bold; margin: -10px; padding: 10px;">Expand section</summary>
 
 
 
