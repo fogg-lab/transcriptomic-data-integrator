@@ -344,11 +344,12 @@ def map_probes_to_genes(expression_df, accession):
     gse = GEOparse.get_GEO(geo=accession)
     platform_id = gse.gpls[list(gse.gpls.keys())[0]].get_accession()
     gpl = GEOparse.get_GEO(geo=platform_id)
-    annotation = {row['ID']: row['Gene Symbol'] for _, row in gpl.table.iterrows()}
-    expression_df.index = expression_df.index.map(lambda probe: annotation.get(probe, probe))
-    expression_df = expression_df.loc[expression_df.index.dropna()]
-    expression_df = expression_df.groupby(expression_df.index).mean()
 
+    annotation = gpl.table.set_index('ID')['Gene Symbol'].to_dict()
+    expression_df.index = expression_df.index.map(annotation)
+    expression_df = expression_df.loc[expression_df.index.dropna()]
+
+    expression_df = expression_df.groupby(expression_df.index).mean()
     expanded_genes = expression_df.index.str.split(' /// ')
     gene_counts = np.array([len(x) for x in expanded_genes])
     expression_df["weight"] = 1 / gene_counts
