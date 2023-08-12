@@ -108,19 +108,20 @@ Select rows in DataFrame.
 
 
 **Example:**
- ``` import transcriptomics_data_query as tdq```
-    >>> expression_df = pd.DataFrame({"GSM1234": [3.452, 4.123, 5.678, 6.789],
-                                       "GSM5678": [1.234, 2.345, 3.456, 4.567]})
-    >>> expression_df.index = ["A1BG", "A2M", "CA10", "SEMA6B"]
-    >>> expression_df.index.name = "symbol"
-    >>> matrisome_genes = tdq.preprocess.get_matrisome_genes()
-    >>> matrisome_expression_df = tdq.preprocess.select_rows(expression_df, matrisome_genes)
-    >>> matrisome_expression_df
-             GSM1234 GSM5678
-    symbol
-        A2M    4.123   2.345
-    SEMA6B    6.789   4.567
-
+```python
+import transcriptomics_data_query as tdq
+>>> expression_df = pd.DataFrame({"GSM1234": [3.452, 4.123, 5.678, 6.789],
+                                  "GSM5678": [1.234, 2.345, 3.456, 4.567]})
+>>> expression_df.index = ["A1BG", "A2M", "CA10", "SEMA6B"]
+>>> expression_df.index.name = "symbol"
+>>> matrisome_genes = tdq.preprocess.get_matrisome_genes()
+>>> matrisome_expression_df = tdq.preprocess.select_rows(expression_df, matrisome_genes)
+>>> matrisome_expression_df
+         GSM1234 GSM5678
+symbol
+   A2M     4.123   2.345
+SEMA6B     6.789   4.567
+```
 
 
 ---
