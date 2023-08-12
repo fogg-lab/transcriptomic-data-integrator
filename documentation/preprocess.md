@@ -108,6 +108,7 @@ Select rows in DataFrame.
 
 
 **Example:**
+
 ```python
 import transcriptomics_data_query as tdq
 >>> expression_df = pd.DataFrame({"GSM1234": [3.452, 4.123, 5.678, 6.789],
