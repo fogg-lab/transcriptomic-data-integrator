@@ -3,8 +3,10 @@ from functools import wraps
 from urllib.error import HTTPError
 import os
 import shutil
+from time import perf_counter
 
 import pkg_resources
+import numpy as np
 import pandas as pd
 from Bio import Entrez
 import GEOparse
@@ -286,11 +288,42 @@ def download_raw_data(accession, output_dir=None, timeout=10):
     util.extract_tar(file_path, output_dir, delete_tar=True)
 
 
-def map_probes_to_genes(expression_data, accession):
+def weighted_average_group(df, weights):
+    """
+    Aggregates groups of rows in a Pandas DataFrame using a weighted average.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input DataFrame containing the data.
+    weights : list
+        List of weights corresponding to the rows of the DataFrame.
+
+    Returns
+    -------
+    result : pd.DataFrame
+        Aggregated DataFrame with weighted averages.
+    """
+    # Convert weights to a NumPy array for efficient multiplication
+    weights_np = np.array(weights)
+
+    # Multiply data by weights
+    weighted_data = df.multiply(weights_np, axis=0)
+
+    # Calculate the sum of the weights for each unique index
+    sum_weights = pd.Series(weights_np, index=df.index).groupby(level=0).sum()
+
+    # Divide the sum of the weighted data by the sum of weights for each unique index
+    result = weighted_data.groupby(level=0).sum().divide(sum_weights, axis=0)
+
+    return result
+
+
+def map_probes_to_genes(expression_df, accession):
     """
     Parameters
     ----------
-    expression_data : pandas.DataFrame
+    expression_df : pandas.DataFrame
         Expression data.
     accession : str
         The GEO accession.
@@ -300,39 +333,32 @@ def map_probes_to_genes(expression_data, accession):
     pandas.DataFrame
         Expression data with probes mapped to genes.
 
-    Warning about function behavior
+    Notes
     -------
-    - When multiple genes map to the same probe, the expression values are duplicated.
-    - When multiple probes map to the same gene, the expression values are averaged.
+    This function maps probes to genes using the GPL annotation, then aggregates the expression data
+    for each gene using a weighted average. The weights are calculated as 1 / n, where n is the number
+    of genes associated with each probe. This is performed to avoid biasing the average towards probes
+    with more genes.
 
-    You may want to modify the behavior of this function to implement a different strategy.
     """
     gse = GEOparse.get_GEO(geo=accession)
     platform_id = gse.gpls[list(gse.gpls.keys())[0]].get_accession()
     gpl = GEOparse.get_GEO(geo=platform_id)
     annotation = {row['ID']: row['Gene Symbol'] for _, row in gpl.table.iterrows()}
-    expression_data.index = expression_data.index.map(lambda probe: annotation.get(probe, probe))
-    expression_data = expression_data.loc[expression_data.index.dropna()]
+    expression_df.index = expression_df.index.map(lambda probe: annotation.get(probe, probe))
+    expression_df = expression_df.loc[expression_df.index.dropna()]
+    expression_df = expression_df.groupby(expression_df.index).mean()
 
-    # DUPLICATION STEP
-    # for probes with multiple genes, make one row per gene with the same expression values
-    expanded_genes = []
-    expanded_expression = []
-    for probe, values in expression_data.iterrows():
-        genes = probe.split(' /// ')
-        for gene in genes:
-            expanded_genes.append(gene)
-            expanded_expression.append(values.tolist())
-    expanded_expression_df = pd.DataFrame(expanded_expression, index=expanded_genes,
-                                          columns=expression_data.columns)
+    expanded_genes = expression_df.index.str.split(' /// ')
+    gene_counts = np.array([len(x) for x in expanded_genes])
+    expression_df["weight"] = 1 / gene_counts
+    expanded_expression_df = expression_df.reindex(expression_df.index.repeat(gene_counts), method='ffill')
+    expanded_genes_flat = [gene for genes in expanded_genes for gene in genes]
+    expanded_expression_df.index = expanded_genes_flat
+    row_weights = expanded_expression_df["weight"]
+    expanded_expression_df.drop(columns=["weight"], inplace=True)
 
-    # AGGREGATION STEP
-    # for genes with multiple probes, take the mean of the probes
-    aggregated_expression_df = expanded_expression_df.groupby(expanded_expression_df.index).mean()
-
-    aggregated_expression_df.index.name = 'symbol'
-
-    return aggregated_expression_df
+    return weighted_average_group(expanded_expression_df, row_weights)
 
 
 def extract_gsm(column_name: str):
