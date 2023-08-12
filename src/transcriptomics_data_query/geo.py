@@ -3,7 +3,6 @@ from functools import wraps
 from urllib.error import HTTPError
 import os
 import shutil
-from time import perf_counter
 
 import pkg_resources
 import numpy as np
@@ -18,11 +17,8 @@ def get_entrez_email():
     """
     Retrieve the email for NCBI API.
 
-    Returns
-    -------
-    str
-        The email address read from the email_for_ncbi_tracking.txt file within the package.
-
+    Returns:
+        str: The email address read from the email_for_ncbi_tracking.txt file within the package.
     """
     email_file = pkg_resources.resource_filename('transcriptomics_data_query',
                                                  'email_for_ncbi_tracking.txt')
@@ -35,17 +31,12 @@ def check_entrez_email(func):
     """
     Decorator to check and set the Entrez email if it is None.
 
-    Parameters
-    ----------
-    func : function
-        The function to be decorated.
+    Args:
+        func (function): The function to be decorated.
 
-    Returns
-    -------
-    wrapper : function
-        The wrapped function.
+    Returns:
+        function: The wrapped function.
     """
-
     @wraps(func)
     def wrapper(*args, **kwargs):
         if Entrez.email is None:
@@ -61,20 +52,13 @@ def accession_from_id(geo_identifier, default_accession=None, exception_on_http_
     """
     Retrieve GEO accession given a GEO identifier.
 
-    Parameters
-    ----------
-    geo_identifier : str
-        The GEO identifier for the query.
-    exception_on_http_error : bool, optional
-        If True, raise an exception on HTTP error, default is False.
-    warn_on_http_error : bool, optional
-        If True, print a warning on HTTP error, default is True.
+    Args:
+        geo_identifier (str): The GEO identifier for the query.
+        exception_on_http_error (bool, optional): If True, raise an exception on HTTP error. Defaults to False.
+        warn_on_http_error (bool, optional): If True, print a warning on HTTP error. Defaults to True.
 
-    Returns
-    -------
-    str or None
-        The corresponding GEO accession if found, else None.
-
+    Returns:
+        str or None: The corresponding GEO accession if found, else None.
     """
     try:
         handle = Entrez.efetch(db="gds", id=geo_identifier, retmode="text")
@@ -99,20 +83,13 @@ def id_from_accession(geo_accession, exception_on_http_error=False, warn_on_http
     """
     Retrieve GEO identifier given a GEO accession.
 
-    Parameters
-    ----------
-    geo_accession : str
-        The GEO accession for the query.
-    exception_on_http_error : bool, optional
-        If True, raise an exception on HTTP error, default is False.
-    warn_on_http_error : bool, optional
-        If True, print a warning on HTTP error, default is True.
+    Args:
+        geo_accession (str): The GEO accession for the query.
+        exception_on_http_error (bool, optional): If True, raise an exception on HTTP error. Defaults to False.
+        warn_on_http_error (bool, optional): If True, print a warning on HTTP error. Defaults to True.
 
-    Returns
-    -------
-    str or None
-        The corresponding GEO identifier if found, else None.
-
+    Returns:
+        str or None: The corresponding GEO identifier if found, else None.
     """
     try:
         handle = Entrez.esearch(db="gds", term=geo_accession)
@@ -132,22 +109,14 @@ def get_accessions_from_ids(geo_ids, default_accession=None, exception_on_http_e
     """
     Retrieve a list of GEO accessions given a list of GEO identifiers.
 
-    Parameters
-    ----------
-    geo_ids : list of str
-        The GEO identifiers for the query.
-    exception_on_http_error : bool, optional
-        If True, raise an exception on HTTP error, default is False.
-    warn_on_http_error : bool, optional
-        If True, print a warning on HTTP error, default is True.
-    default_accession : NoneType or str, optional
-        Default value to use for study accession if it could not be found (e.g. None or "unknown").
+    Args:
+        geo_ids (list of str): The GEO identifiers for the query.
+        exception_on_http_error (bool, optional): If True, raise an exception on HTTP error. Defaults to False.
+        warn_on_http_error (bool, optional): If True, print a warning on HTTP error. Defaults to True.
+        default_accession (NoneType or str, optional): Default value to use for study accession if it could not be found (e.g. None or "unknown").
 
-    Returns
-    -------
-    list of str
-        The corresponding GEO accessions.
-
+    Returns:
+        list of str: The corresponding GEO accessions.
     """
     return [accession_from_id(id, default_accession, exception_on_http_error, warn_on_http_error)
             for id in geo_ids]
@@ -158,20 +127,13 @@ def get_study_description(geo_id, exception_on_http_error=False, warn_on_http_er
     """
     Retrieve GEO study description given an identifier.
 
-    Parameters
-    ----------
-    geo_id : str
-        The GEO identifier for the query.
-    exception_on_http_error : bool, optional
-        If True, raise an exception on HTTP error, default is False.
-    warn_on_http_error : bool, optional
-        If True, print a warning on HTTP error, default is True.
+    Args:
+        geo_id (str): The GEO identifier for the query.
+        exception_on_http_error (bool, optional): If True, raise an exception on HTTP error. Defaults to False.
+        warn_on_http_error (bool, optional): If True, print a warning on HTTP error. Defaults to True.
 
-    Returns
-    -------
-    str or None
-        The corresponding study description if found, else None.
-
+    Returns:
+        str or None: The corresponding study description if found, else None.
     """
     try:
         handle = Entrez.efetch(db="gds", id=geo_id, retmode="text")
@@ -197,22 +159,14 @@ def get_descriptions_from_ids(geo_study_ids, convert_to_accessions=True, default
     """
     Retrieve GEO study description given an identifier.
 
-    Parameters
-    ----------
-    geo_id : str
-        The GEO identifier for the query.
-    exception_on_http_error : bool, optional
-        If True, raise an exception on HTTP error, default is False.
-    warn_on_http_error : bool, optional
-        If True, print a warning on HTTP error, default is True.
-    default_accession : NoneType or str, optional
-        Default value to use for study accession if it could not be found (e.g. None or "unknown").
+    Args:
+        geo_id (str): The GEO identifier for the query.
+        exception_on_http_error (bool, optional): If True, raise an exception on HTTP error. Defaults to False.
+        warn_on_http_error (bool, optional): If True, print a warning on HTTP error. Defaults to True.
+        default_accession (NoneType or str, optional): Default value to use for study accession if it could not be found (e.g. None or "unknown").
 
-    Returns
-    -------
-    str or None
-        The corresponding study description if found, else None.
-
+    Returns:
+        str or None: The corresponding study description if found, else None.
     """
     if convert_to_accessions:
         return {accession_from_id(geo_id, default_accession): get_study_description(geo_id)
@@ -227,22 +181,14 @@ def search_geo(query, db="gds", max_results=25, exception_on_http_error=False,
     """
     Retrieve a list of GEO identifiers given a search query.
 
-    Parameters
-    ----------
-    query : str
-        The search query string.
-    db : str, optional
-        The database to search, default is "gds."
-    exception_on_http_error : bool, optional
-        If True, raise an exception on HTTP error, default is False.
-    warn_on_http_error : bool, optional
-        If True, print a warning on HTTP error, default is True.
+    Args:
+        query (str): The search query string.
+        db (str, optional): The database to search. Defaults to "gds."
+        exception_on_http_error (bool, optional): If True, raise an exception on HTTP error. Defaults to False.
+        warn_on_http_error (bool, optional): If True, print a warning on HTTP error. Defaults to True.
 
-    Returns
-    -------
-    list
-        List of GEO identifiers corresponding to the query.
-
+    Returns:
+        list: List of GEO identifiers corresponding to the query.
     """
     try:
         handle = Entrez.esearch(db=db, term=query, retmax=max_results)
@@ -261,15 +207,10 @@ def search_geo(query, db="gds", max_results=25, exception_on_http_error=False,
 
 def download_raw_data(accession, output_dir=None, timeout=10):
     """
-    Parameters
-    ----------
-    accession : str
-        The GEO accession.
-    output_dir : str
-        The directory to save the raw data.
-    timeout : int
-        The timeout in seconds for the HTTP request.
-
+    Args:
+        accession (str): The GEO accession.
+        output_dir (str): The directory to save the raw data.
+        timeout (int): The timeout in seconds for the HTTP request.
     """
     if output_dir is None:
         output_dir = os.path.join(os.getcwd(), accession)
@@ -292,17 +233,12 @@ def weighted_average_group(df, weights):
     """
     Aggregates groups of rows in a Pandas DataFrame using a weighted average.
 
-    Parameters
-    ----------
-    df : pd.DataFrame
-        Input DataFrame containing the data.
-    weights : list
-        List of weights corresponding to the rows of the DataFrame.
+    Args:
+        df (pd.DataFrame): Input DataFrame containing the data.
+        weights (list): List of weights corresponding to the rows of the DataFrame.
 
-    Returns
-    -------
-    result : pd.DataFrame
-        Aggregated DataFrame with weighted averages.
+    Returns:
+        result (pd.DataFrame): Aggregated DataFrame with weighted averages.
     """
     # Convert weights to a NumPy array for efficient multiplication
     weights_np = np.array(weights)
@@ -321,25 +257,18 @@ def weighted_average_group(df, weights):
 
 def map_probes_to_genes(expression_df, accession):
     """
-    Parameters
-    ----------
-    expression_df : pandas.DataFrame
-        Expression data.
-    accession : str
-        The GEO accession.
+    Args:
+        expression_df (pandas.DataFrame): Expression data.
+        accession (str): The GEO accession.
 
-    Returns
-    -------
-    pandas.DataFrame
-        Expression data with probes mapped to genes.
+    Returns:
+        pandas.DataFrame: Expression data with probes mapped to genes.
 
-    Notes
-    -------
-    This function maps probes to genes using the GPL annotation, then aggregates the expression data
-    for each gene using a weighted average. The weights are calculated as 1 / n, where n is the number
-    of genes associated with each probe. This is performed to avoid biasing the average towards probes
-    with more genes.
-
+    Notes:
+        This function maps probes to genes using the GPL annotation, then aggregates the expression data
+        for each gene using a weighted average. The weights are calculated as 1 / n, where n is the number
+        of genes associated with each probe. This is performed to avoid biasing the average towards probes
+        with more genes.
     """
     gse = GEOparse.get_GEO(geo=accession)
     platform_id = gse.gpls[list(gse.gpls.keys())[0]].get_accession()
@@ -371,15 +300,10 @@ def clean_geo_sample_columns(expr_df: pd.DataFrame):
     """
     Clean the sample columns of a GEO expression matrix.
 
-    Parameters
-    ----------
-    expr_df : pandas.DataFrame
-        The expression matrix.
+    Args:
+        expr_df (pandas.DataFrame): The expression matrix.
 
-    Returns
-    -------
-    pandas.DataFrame
-        The expression matrix with cleaned sample columns.
-
+    Returns:
+        pandas.DataFrame: The expression matrix with cleaned sample columns.
     """
     return expr_df.rename(columns=extract_gsm)

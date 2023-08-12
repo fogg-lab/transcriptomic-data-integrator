@@ -2,23 +2,25 @@ import os.path
 import tarfile
 
 def is_valid_tar_member(member: tarfile.TarInfo, target_dir: str) -> bool:
-    """Check if a tar member is safe to extract. `target_dir` should be an absolute path."""
+    """Check if a tar member is safe to extract. `target_dir` should be an absolute path.
+
+    Args:
+        member (tarfile.TarInfo): The tar member to check.
+        target_dir (str): The absolute path to the target directory.
+
+    Returns:
+        bool: True if the tar member is safe to extract, False otherwise.
+    """
     member_dest = os.path.abspath(os.path.join(target_dir, member.name))
     return member_dest.startswith(target_dir)
 
 def extract_tar(tar_file, target_dir, delete_tar=False):
-    """
-    Extract a tar file to a target directory.
+    """Extract a tar file to a target directory.
 
-    Parameters
-    ----------
-    tar_file : str
-        Path to the tar file.
-    target_dir : str
-        Path to the target directory.
-    delete_tar : bool, optional
-        If True, delete the tar file after extraction, default is False.
-
+    Args:
+        tar_file (str): Path to the tar file.
+        target_dir (str): Path to the target directory.
+        delete_tar (bool, optional): If True, delete the tar file after extraction. Defaults to False.
     """
     target_dir = os.path.abspath(target_dir)
 
