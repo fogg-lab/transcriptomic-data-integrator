@@ -195,8 +195,7 @@ def search_geo(query, db="gds", max_results=25, exception_on_http_error=False,
         handle = Entrez.esearch(db=db, term=query, retmax=max_results)
         record = Entrez.read(handle)
         handle.close()
-        if print_n_results:
-            print(f"Hits: {record['Count']}")
+        print(f"Hits: {record['Count']}")
         return record["IdList"]
     except HTTPError as http_err:
         if exception_on_http_error:

@@ -227,7 +227,6 @@ search_geo(
     max_results=25,
     exception_on_http_error=False,
     warn_on_http_error=True,
-    print_n_results=True
 )
 ```
 
