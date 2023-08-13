@@ -24,6 +24,7 @@ def rma_normalization_r(input_dir, output_file, remove_cel_dir=False):
     if remove_cel_dir:
         shutil.rmtree(input_dir)
 
+
 def get_genes_from_file(filename):
     """Read genes from a text file with one gene symbol per line.
 
@@ -40,7 +41,7 @@ def get_genes_from_file(filename):
 
 
 def get_matrisome_genes(core_matrisome_only=False):
-    """Retrieve the matrisome genes from the MSigDB.
+    """Retrieve the human matrisome genes from MSigDB.
 
     Args:
         core_matrisome_only (bool, optional): If True, only retrieve the core matrisome genes. Defaults to False.

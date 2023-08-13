@@ -14,7 +14,7 @@ setup(
         "requests",
     ],
     package_data={
-        PACKAGE_NAME: ["email_for_ncbi_tracking.txt"],
+        PACKAGE_NAME: ["rscripts/*.R"],
     },
     include_package_data=True,
     entry_points={
