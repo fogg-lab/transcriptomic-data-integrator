@@ -20,7 +20,9 @@ def rma_normalization_r(input_dir, output_file, remove_cel_dir=False):
     """
     r_script_path = pkg_resources.resource_filename('transcriptomics_data_query',
                                                     'rscripts/rma_normalization.R')
+    print(f"Executing: Rscript {r_script_path} {input_dir} {output_file}")
     subprocess.run(["Rscript", r_script_path, input_dir, output_file], check=True)
+    print("Normalization complete.")
     if remove_cel_dir:
         shutil.rmtree(input_dir)
 

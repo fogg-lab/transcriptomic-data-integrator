@@ -4,17 +4,13 @@ Search, retrieve, and prepare transcriptomics data from GEO and GDC (development
 ## Prerequisites
 - Python 3.7 or higher.
 - To use the functions for normalization or batch correction from the `preprocess` module, install [R](https://www.r-project.org/) and packages:
-  - [affy](https://bioconductor.org/packages/release/bioc/html/affy.html)
   - [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html)
+  - [oligo](https://www.bioconductor.org/packages/release/bioc/html/oligo.html)
   - [readr](https://cran.r-project.org/web/packages/readr/index.html)
   - [sva](https://bioconductor.org/packages/release/bioc/html/sva.html)
   - [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html)
 
-These packages can be installed in an R environment using the following commands:
-```R
-install.packages('BiocManager', repos='https://cloud.r-project.org/')
-BiocManager::install(c('affy', 'edgeR', 'readr', 'sva', 'DESeq2'))
-```
+These packages can be installed in an R environment by running the script install_r_packages.R.
 
 ## Setup
 
