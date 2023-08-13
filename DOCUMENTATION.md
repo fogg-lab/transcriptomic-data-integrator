@@ -13,7 +13,7 @@
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L3"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L17"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_entrez_email`
 
@@ -32,7 +32,7 @@ Retrieve the email for NCBI API.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L12"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L31"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `check_entrez_email`
 
@@ -57,7 +57,7 @@ Decorator to check and set the Entrez email if it is None.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L24"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L50"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `accession_from_id`
 
@@ -89,7 +89,7 @@ Retrieve GEO accession given a GEO identifier.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L39"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L82"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `id_from_accession`
 
@@ -120,7 +120,7 @@ Retrieve GEO identifier given a GEO accession.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L53"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L108"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_accessions_from_ids`
 
@@ -153,7 +153,7 @@ Retrieve a list of GEO accessions given a list of GEO identifiers.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L69"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L126"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_study_description`
 
@@ -184,7 +184,7 @@ Retrieve GEO study description given an identifier.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L83"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L159"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_descriptions_from_ids`
 
@@ -216,7 +216,7 @@ Retrieve GEO study description given an identifier.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L98"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L179"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `search_geo`
 
@@ -251,26 +251,48 @@ Retrieve a list of GEO identifiers given a search query.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L114"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L209"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-## <kbd>function</kbd> `download_raw_data`
+## <kbd>function</kbd> `download_geo_expression_data`
 
 ```python
-download_raw_data(accession, output_dir=None, timeout=10)
+download_geo_expression_data(gse: GSE, output_dir=None, timeout=10)
 ```
+
+Download raw microarray data or RNASeq counts from a GEO accession. 
 
 
 
 **Args:**
  
- - <b>`accession`</b> (str):  The GEO accession. 
- - <b>`output_dir`</b> (str):  The directory to save the raw data. 
- - <b>`timeout`</b> (int):  The timeout in seconds for the HTTP request. 
+ - <b>`gse`</b> (GEOparse.GEOTypes.GSE):  The GEO series object. 
+ - <b>`output_dir`</b> (str, optional):  The directory to save the raw data.  Defaults to None (save to current working directory). 
+ - <b>`timeout`</b> (int, optional):  The timeout in seconds for the HTTP request. Defaults to 10. 
 
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L123"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L251"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
+## <kbd>function</kbd> `get_geo_clinical_characteristics`
+
+```python
+get_geo_clinical_characteristics(gse: GSE, output_dir=None)
+```
+
+Parse clinical data (ch1 characteristics of each sample) from a GEO accession. 
+
+
+
+**Args:**
+ 
+ - <b>`gse`</b> (GEOparse.GEOTypes.GSE):  The GEO series object. 
+ - <b>`output_dir`</b> (str, Optional):  The directory to save the clinical data.  Defaults to None (save to current working directory). 
+
+
+---
+
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L288"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `weighted_average_group`
 
@@ -296,12 +318,12 @@ Aggregates groups of rows in a Pandas DataFrame using a weighted average.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L136"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L314"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `map_probes_to_genes`
 
 ```python
-map_probes_to_genes(expression_df, accession)
+map_probes_to_genes(expression_df, gse: GSE)
 ```
 
 
@@ -309,7 +331,7 @@ map_probes_to_genes(expression_df, accession)
 **Args:**
  
  - <b>`expression_df`</b> (pandas.DataFrame):  Expression data. 
- - <b>`accession`</b> (str):  The GEO accession. 
+ - <b>`gse`</b> (GEOparse.GEOTypes.GSE):  The GEO series object. 
 
 
 
@@ -326,7 +348,7 @@ map_probes_to_genes(expression_df, accession)
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L153"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L349"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `extract_gsm`
 
@@ -339,7 +361,7 @@ Extract a GSM sample name from a given string, or return the original string if 
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L157"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L354"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `clean_geo_sample_columns`
 
@@ -362,6 +384,7 @@ Clean the sample columns of a GEO expression matrix.
  - <b>`pandas.DataFrame`</b>:  The expression matrix with cleaned sample columns. 
 
 
+
 </details>
 
 
@@ -380,28 +403,91 @@ Clean the sample columns of a GEO expression matrix.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L4"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+**Global Variables**
+---------------
+- **CORE_MATRISOME_URL**
+- **ALL_MATRISOME_URL**
 
-## <kbd>function</kbd> `rma_normalization_r`
+---
+
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L14"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
+## <kbd>function</kbd> `normalize_microarray`
 
 ```python
-rma_normalization_r(input_dir, output_file, remove_cel_dir=False)
+normalize_microarray(input_dir, output_file, remove_cel_dir=False)
 ```
 
-Perform RMA normalization on raw data (directory containing CEL files). 
+Normalize microarray expression data given a directory containing CEL.gz files. 
 
 
 
 **Args:**
  
- - <b>`input_dir`</b> (str):  Path to the directory containing CEL files. 
+ - <b>`input_dir`</b> (str):  Path to the directory containing CEL.gz files. 
  - <b>`output_file`</b> (str):  Path to the output file. 
- - <b>`remove_cel_dir`</b> (bool, optional):  If True, remove the directory containing CEL files after normalization. Defaults to False. 
+ - <b>`remove_cel_dir`</b> (bool, optional):  If True, remove the input directory after normalization. Defaults to False. 
 
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L14"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L31"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
+## <kbd>function</kbd> `normalize_rnaseq`
+
+```python
+normalize_rnaseq(
+    expression_file,
+    clinical_file,
+    output_file,
+    norm_method='mrn',
+    design_col=None
+)
+```
+
+Normalize RNA-seq expression data given a file containing raw counts. 
+
+
+
+**Args:**
+ 
+ - <b>`expression_file`</b> (str):  Path to the input file containing raw counts. 
+ - <b>`clinical_file`</b> (str):  Path to the input file containing clinical data. 
+ - <b>`output_file`</b> (str):  Path to the output file. 
+ - <b>`norm_method`</b> (str, optional):  Normalization method (tmm or mrn).  Defaults to "mrn". 
+
+
+---
+
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L83"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
+## <kbd>function</kbd> `normalize`
+
+```python
+normalize(
+    input_path,
+    output_file,
+    clinical_file=None,
+    norm_method='mrn',
+    design_col=None
+)
+```
+
+Normalize microarray or RNASeq expression data. 
+
+
+
+**Args:**
+ 
+ - <b>`input_path`</b> (str):  Path to the input file (for RNASeq) or directory (for microarray). 
+ - <b>`output_file`</b> (str):  Path to the output file. 
+ - <b>`clinical_file`</b> (str, optional):  Path to the input file containing clinical data. 
+ - <b>`norm_method`</b> (str, optional):  Normalization method employed if data is RNASeq (tmm or mrn).  Defaults to "mrn". For microarray, RMA normalization is used. 
+
+
+---
+
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L99"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_genes_from_file`
 
@@ -426,7 +512,7 @@ Read genes from a text file with one gene symbol per line.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L25"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L114"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_matrisome_genes`
 
@@ -434,7 +520,7 @@ Read genes from a text file with one gene symbol per line.
 get_matrisome_genes(core_matrisome_only=False)
 ```
 
-Retrieve the matrisome genes from the MSigDB. 
+Retrieve the human matrisome genes from MSigDB. 
 
 
 
@@ -451,7 +537,7 @@ Retrieve the matrisome genes from the MSigDB.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L36"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L136"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `select_rows`
 
@@ -494,10 +580,9 @@ symbol
 SEMA6B     6.789   4.567
 ```
 
-
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L63"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L167"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `drop_nan_row_indices`
 
@@ -518,6 +603,7 @@ Drop rows where the row index is NaN.
 **Returns:**
  
  - <b>`pandas.DataFrame`</b>:  The expression matrix with NaN rows dropped. 
+
 
 
 
@@ -582,6 +668,7 @@ Extract a tar file to a target directory.
  - <b>`tar_file`</b> (str):  Path to the tar file. 
  - <b>`target_dir`</b> (str):  Path to the target directory. 
  - <b>`delete_tar`</b> (bool, optional):  If True, delete the tar file after extraction. Defaults to False. 
+
 
 
 </details>
