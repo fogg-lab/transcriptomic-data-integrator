@@ -10,6 +10,12 @@ Search, retrieve, and prepare transcriptomics data from GEO and GDC (development
   - [sva](https://bioconductor.org/packages/release/bioc/html/sva.html)
   - [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html)
 
+These packages can be installed in an R environment using the following commands:
+```R
+install.packages('BiocManager', repos='https://cloud.r-project.org/')
+BiocManager::install(c('affy', 'edgeR', 'readr', 'sva', 'DESeq2'))
+```
+
 ## Setup
 
 Run the below commands at the command line. Replace dummy email with your email which will be submitted in your GEO queries to the NCBI API.
