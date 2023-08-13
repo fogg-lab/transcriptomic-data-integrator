@@ -3,14 +3,14 @@ Search, retrieve, and prepare transcriptomics data from GEO and GDC (development
 
 ## Prerequisites
 - Python 3.7 or higher.
-- To use the functions for normalization or batch correction from the `preprocess` module, install [R](https://www.r-project.org/) 4.3 and packages:
+- To use the functions for normalization or batch correction from the `preprocess` module, install [R](https://www.r-project.org/) and packages:
   - [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html)
   - [oligo](https://www.bioconductor.org/packages/release/bioc/html/oligo.html)
   - [readr](https://cran.r-project.org/web/packages/readr/index.html)
   - [sva](https://bioconductor.org/packages/release/bioc/html/sva.html)
   - [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html)
 
-These packages can be installed in an R environment by running the script install_r_packages.R.
+These packages can be installed in an R environment by running the script install_r_packages.R. This install script was written for R 4.3.
 
 ## Setup
 
