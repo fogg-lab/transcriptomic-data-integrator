@@ -1,5 +1,6 @@
 import re
 from functools import wraps
+import urllib.request
 from urllib.error import HTTPError
 import os
 import shutil
@@ -205,13 +206,17 @@ def search_geo(query, db="gds", max_results=25, exception_on_http_error=False,
         return []
 
 
-def download_raw_data(accession, output_dir=None, timeout=10):
+def download_geo_expression_data(gse: GEOparse.GEOTypes.GSE, output_dir=None, timeout=10):
     """
+    Download raw microarray data or RNASeq counts from a GEO accession.
+
     Args:
-        accession (str): The GEO accession.
-        output_dir (str): The directory to save the raw data.
-        timeout (int): The timeout in seconds for the HTTP request.
+        gse (GEOparse.GEOTypes.GSE): The GEO series object.
+        output_dir (str, optional): The directory to save the raw data.
+                                    Defaults to None (save to current working directory).
+        timeout (int, optional): The timeout in seconds for the HTTP request. Defaults to 10.
     """
+    accession = gse.name
     if output_dir is None:
         output_dir = os.path.join(os.getcwd(), accession)
 
@@ -219,14 +224,65 @@ def download_raw_data(accession, output_dir=None, timeout=10):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    url = f"https://www.ncbi.nlm.nih.gov/geo/download/?acc={accession}&format=file"
-    file_path = os.path.join(output_dir, f"{accession}.tar")
+    url = gse.metadata["supplementary_file"][0]
+    is_microarray = url.endswith(".tar")
 
-    with requests.get(url, stream=True, timeout=timeout) as response:
+    if is_microarray:
+        file_path = os.path.join(output_dir, f"{accession}.tar")
+    else:
+        file_path = os.path.join(output_dir, f"{accession}.txt.gz")
+
+    with urllib.request.urlopen(url) as response:
+        # Read the content and write to the file
         with open(file_path, 'wb') as file:
-            shutil.copyfileobj(response.raw, file)
+            shutil.copyfileobj(response, file)
 
-    util.extract_tar(file_path, output_dir, delete_tar=True)
+    if is_microarray:
+        util.extract_tar(file_path, output_dir, delete_tar=True)
+    else:
+        # extract gz
+        import gzip
+        with gzip.open(file_path, 'rb') as f_in:
+            out_path = os.path.join(output_dir, f"{accession}_expression_matrix.tsv")
+            with open(out_path, 'wb') as f_out:
+                shutil.copyfileobj(f_in, f_out)
+
+
+def get_geo_clinical_characteristics(gse: GEOparse.GEOTypes.GSE, output_dir=None):
+    """
+    Parse clinical data (ch1 characteristics of each sample) from a GEO accession.
+
+    Args:
+        gse (GEOparse.GEOTypes.GSE): The GEO series object.
+        output_dir (str, Optional): The directory to save the clinical data.
+                                    Defaults to None (save to current working directory).
+    """
+
+    characteristics = {sample: gse.gsms[sample].metadata["characteristics_ch1"]
+                       for sample in gse.gsms}
+    clinical_df = pd.DataFrame.from_dict(characteristics, orient='index')
+
+    # Melt the DataFrame to a long format
+    clinical_df = clinical_df.melt(ignore_index=False)
+
+    # Split value into key and value parts
+    key_values = clinical_df['value'].str.split(': ', expand=True)
+
+    # Extract the characteristic names and format them
+    columns = key_values[0].str.lower().str.replace(' ', '_').unique()
+
+    # Pivot the DataFrame
+    clinical_df = key_values.pivot_table(index=clinical_df.index, columns=0, values=1, aggfunc='first')
+
+    # Rename the index to "sample_id" and assign characteristic names to the columns
+    clinical_df.index.rename("sample_id", inplace=True)
+    clinical_df.columns = columns
+
+    # Save the clinical data to a file
+    if output_dir is None:
+        output_dir = os.getcwd()
+
+    clinical_df.to_csv(os.path.join(output_dir, f"{gse.name}_clinical_data.tsv"), sep='\t')
 
 
 def weighted_average_group(df, weights):

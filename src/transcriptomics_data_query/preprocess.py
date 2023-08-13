@@ -10,13 +10,13 @@ CORE_MATRISOME_URL = "https://www.gsea-msigdb.org/gsea/msigdb/human/download_gen
 ALL_MATRISOME_URL = "https://www.gsea-msigdb.org/gsea/msigdb/human/download_geneset.jsp?geneSetName=NABA_MATRISOME&fileType=json"
 
 
-def rma_normalization_r(input_dir, output_file, remove_cel_dir=False):
-    """Perform RMA normalization on raw data (directory containing CEL files).
+def normalize_microarray(input_dir, output_file, remove_cel_dir=False):
+    """Normalize microarray expression data given a directory containing CEL.gz files.
 
     Args:
-        input_dir (str): Path to the directory containing CEL files.
+        input_dir (str): Path to the directory containing CEL.gz files.
         output_file (str): Path to the output file.
-        remove_cel_dir (bool, optional): If True, remove the directory containing CEL files after normalization. Defaults to False.
+        remove_cel_dir (bool, optional): If True, remove the input directory after normalization. Defaults to False.
     """
     r_script_path = pkg_resources.resource_filename('transcriptomics_data_query',
                                                     'rscripts/rma_normalization.R')
@@ -25,6 +25,23 @@ def rma_normalization_r(input_dir, output_file, remove_cel_dir=False):
     print("Normalization complete.")
     if remove_cel_dir:
         shutil.rmtree(input_dir)
+
+
+def normalize_rnaseq(expression_file, clinical_file, output_file, norm_method="tmm"):
+    """Normalize RNA-seq expression data given a file containing raw counts.
+
+    Args:
+        expression_file (str): Path to the input file containing raw counts.
+        clinical_file (str): Path to the input file containing clinical data.
+        output_file (str): Path to the output file.
+        norm_method (str, optional): Normalization method. Defaults to "tmm".
+    """
+    r_script_path = pkg_resources.resource_filename('transcriptomics_data_query',
+                                                    'rscripts/rnaseq_normalization.R')
+    print(f"Executing: Rscript {r_script_path} {norm_method} {expression_file} {clinical_file} {output_file}")
+    subprocess.run(["Rscript", r_script_path, norm_method, expression_file, clinical_file,
+                    output_file], check=True)
+    print("Normalization complete.")
 
 
 def get_genes_from_file(filename):
