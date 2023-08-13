@@ -178,13 +178,14 @@ def get_descriptions_from_ids(geo_study_ids, convert_to_accessions=True, default
 
 @check_entrez_email
 def search_geo(query, db="gds", max_results=25, exception_on_http_error=False,
-               warn_on_http_error=True, print_n_results=True):
+               warn_on_http_error=True):
     """
     Retrieve a list of GEO identifiers given a search query.
 
     Args:
         query (str): The search query string.
         db (str, optional): The database to search. Defaults to "gds."
+        max_results (int, optional): The maximum number of results to return. Defaults to 25.
         exception_on_http_error (bool, optional): If True, raise an exception on HTTP error. Defaults to False.
         warn_on_http_error (bool, optional): If True, print a warning on HTTP error. Defaults to True.
 

@@ -238,6 +238,7 @@ Retrieve a list of GEO identifiers given a search query.
  
  - <b>`query`</b> (str):  The search query string. 
  - <b>`db`</b> (str, optional):  The database to search. Defaults to "gds." 
+ - <b>`max_results`</b> (int, optional): The maximum number of results to return. Defaults to 25.
  - <b>`exception_on_http_error`</b> (bool, optional):  If True, raise an exception on HTTP error. Defaults to False. 
  - <b>`warn_on_http_error`</b> (bool, optional):  If True, print a warning on HTTP error. Defaults to True. 
 
