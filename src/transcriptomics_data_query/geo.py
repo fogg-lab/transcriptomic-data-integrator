@@ -311,11 +311,11 @@ def weighted_average_group(df, weights):
     return result
 
 
-def map_probes_to_genes(expression_df, accession):
+def map_probes_to_genes(expression_df, gse: GEOparse.GEOTypes.GSE):
     """
     Args:
         expression_df (pandas.DataFrame): Expression data.
-        accession (str): The GEO accession.
+        gse (GEOparse.GEOTypes.GSE): The GEO series object.
 
     Returns:
         pandas.DataFrame: Expression data with probes mapped to genes.
@@ -326,7 +326,6 @@ def map_probes_to_genes(expression_df, accession):
         of genes associated with each probe. This is performed to avoid biasing the average towards probes
         with more genes.
     """
-    gse = GEOparse.get_GEO(geo=accession)
     platform_id = gse.gpls[list(gse.gpls.keys())[0]].get_accession()
     gpl = GEOparse.get_GEO(geo=platform_id)
 
