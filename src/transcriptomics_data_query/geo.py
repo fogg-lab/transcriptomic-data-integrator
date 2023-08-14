@@ -251,7 +251,7 @@ def download_geo_expression_data(gse: GEOparse.GEOTypes.GSE, output_dir=None, ti
 
 def get_geo_clinical_characteristics(gse: GEOparse.GEOTypes.GSE, output_file=None):
     """
-    Parse clinical data (ch1 characteristics of each sample) from a GEO accession.
+    Parse clinical data from a GEO accession.
 
     Args:
         gse (GEOparse.GEOTypes.GSE): The GEO series object.
@@ -278,6 +278,11 @@ def get_geo_clinical_characteristics(gse: GEOparse.GEOTypes.GSE, output_file=Non
     # Rename the index to "sample_id" and assign characteristic names to the columns
     clinical_df.index.rename("sample_id", inplace=True)
     clinical_df.columns = columns
+
+    # Add other potentially useful metadata
+    for field in ["title", "description", "source_name_ch1"]:
+        if field in gse.metadata:
+            clinical_df[field] = gse.metadata[field]
 
     # Save the clinical data to a file
     if output_file is None:
