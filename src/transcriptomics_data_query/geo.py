@@ -281,8 +281,11 @@ def get_geo_clinical_characteristics(gse: GEOparse.GEOTypes.GSE, output_file=Non
 
     # Add other potentially useful metadata
     for field in ["title", "description", "source_name_ch1"]:
-        if field in gse.metadata:
-            clinical_df[field] = gse.metadata[field]
+        try:
+            field_values = {sample: gse.gsms[sample].metadata[field] for sample in gse.gsms}
+            clinical_df[field] = pd.Series(field_values)
+        except KeyError:
+            pass
 
     # Save the clinical data to a file
     if output_file is None:
