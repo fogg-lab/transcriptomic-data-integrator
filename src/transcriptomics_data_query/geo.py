@@ -311,6 +311,20 @@ def weighted_average_group(df, weights):
 
     return result
 
+
+def clean_gpl_annotation_column_values(annotation_column: pd.Series) -> pd.Series:
+    """Ensure all values in the annotation column are strings using ' // ' as separator.
+
+    Args:
+        annotation_column (pandas.Series): The annotation column.
+    Returns:
+        pandas.Series: The cleaned annotation column.
+    """
+    annotation_column = annotation_column.astype(str)
+    annotation_column = annotation_column.str.replace(' /// ', ' // ')
+    return annotation_column
+
+
 def get_gene_mapper(gpl: GEOparse.GEOTypes.GPL) -> dict:
     """raise exception if annotation not parsable"""
 
@@ -321,13 +335,23 @@ def get_gene_mapper(gpl: GEOparse.GEOTypes.GPL) -> dict:
     if len(gene_symbol_indices) == 1:
         # There is a gene symbol column
         key = gene_symbol_indices[0]
-        return gpl.table.set_index('ID')[key].to_dict()
+        print(f"Using annotation column {key} for gene symbols")
+        genes_series = gpl.table.set_index('ID')[key]
+        genes_series = clean_gpl_annotation_column_values(genes_series)
+        return genes_series.to_dict()
 
     entrez_indices = simplified_colnames.index[simplified_colnames == "entrez_id"]
+    if len(entrez_indices) == 0:
+        entrez_indices = simplified_colnames.index[simplified_colnames == "entrez_gene"]
+    if len(entrez_indices) == 0:
+        entrez_indices = simplified_colnames.index[simplified_colnames == "entrez_gene_id"]
     if len(entrez_indices) == 1:
         # There is an entrez column
         key = entrez_indices[0]
-        return gpl.table.set_index('ID')[key].to_dict()
+        print(f"Using annotation column {key} for Entrez IDs")
+        genes_series = gpl.table.set_index('ID')[key]
+        genes_series = clean_gpl_annotation_column_values(genes_series)
+        return genes_series.to_dict()
 
     # Last resort: try to find a column with patterns like "ENS[A-Z]+[0-9]+"
     pattern = re.compile(r'ENS[A-Z]+[0-9]+')
@@ -335,10 +359,11 @@ def get_gene_mapper(gpl: GEOparse.GEOTypes.GPL) -> dict:
         first_five_values = gpl.table[colname].head(5)
         col_is_junk = False
         for value in first_five_values:
-            if not pattern.match(value):
+            if not pattern.findall(str(value)):
                 col_is_junk = True
                 break
         if not col_is_junk:
+            print(f"Using annotation column {colname} for Ensembl IDs")
             genes_series = gpl.table.set_index('ID')[colname]
             genes_series = genes_series.str.findall(pattern)
             genes_series = genes_series.apply(lambda x: ' // '.join(set(x)))
@@ -365,20 +390,30 @@ def map_probes_to_genes(expression_df, gse: GEOparse.GEOTypes.GSE):
         as 1 / n, where n is the number of genes associated with each probe. This is performed
         to avoid biasing the average towards probes with more genes.
     """
+
+    # Validate that the indices of the expression data are not the default RangeIndex
+    if (isinstance(expression_df.index, pd.RangeIndex)
+        and expression_df.index.start == 0 and expression_df.index.step == 1):
+        raise ValueError("The index of the expression data must be set to the probe IDs. "
+                         "If you are reading expression data from a file with pandas.read_csv(), "
+                         "try setting the index_col argument to 0.")
+
     platform_id = gse.gpls[list(gse.gpls.keys())[0]].get_accession()
     gpl = GEOparse.get_GEO(geo=platform_id)
 
     annotation_mapper = get_gene_mapper(gpl)
-
     expression_df.index = expression_df.index.map(annotation_mapper)
-    expression_df = expression_df.loc[expression_df.index.dropna()]
+
+    expression_df = expression_df[expression_df.index != "nan"]
     expression_df = expression_df.groupby(expression_df.index).mean()
-    expanded_genes = expression_df.index.str.split(' /// ')
+    expanded_genes = expression_df.index.astype(str).str.split(' // ')
+
     gene_counts = np.array([len(x) for x in expanded_genes])
     expression_df["weight"] = 1 / gene_counts
     expanded_expression_df = expression_df.reindex(expression_df.index.repeat(gene_counts), method='ffill')
     expanded_genes_flat = [gene for genes in expanded_genes for gene in genes]
     expanded_expression_df.index = expanded_genes_flat
+
     row_weights = expanded_expression_df["weight"]
     expanded_expression_df.drop(columns=["weight"], inplace=True)
 
