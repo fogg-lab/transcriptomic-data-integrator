@@ -87,8 +87,9 @@ def normalize(input_path, output_file, clinical_file=None, norm_method="mrn", de
         input_path (str): Path to the input file (for RNASeq) or directory (for microarray).
         output_file (str): Path to the output file.
         clinical_file (str, optional): Path to the input file containing clinical data.
+            Not required for microarray.
         norm_method (str, optional): Normalization method employed if data is RNASeq (tmm or mrn).
-                                     Defaults to "mrn". For microarray, RMA normalization is used.
+            Defaults to "mrn". For microarray, RMA normalization is used.
     """
     if os.path.isdir(input_path):
         normalize_microarray(input_path, output_file, remove_cel_dir=True)
