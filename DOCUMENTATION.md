@@ -288,7 +288,7 @@ Parse clinical data (ch1 characteristics of each sample) from a GEO accession.
 **Args:**
  
  - <b>`gse`</b> (GEOparse.GEOTypes.GSE):  The GEO series object. 
- - <b>`output_dir`</b> (str, Optional):  The directory to save the clinical data.  Defaults to None (save to current working directory). 
+ - <b>`output_file`</b> (str, Optional):  The file to save the clinical data. Defaults to None. If None, file is saved to {accession}_clinical_data.tsv in current working directory.
 
 
 ---

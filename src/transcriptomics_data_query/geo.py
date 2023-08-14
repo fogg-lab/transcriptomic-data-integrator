@@ -249,14 +249,14 @@ def download_geo_expression_data(gse: GEOparse.GEOTypes.GSE, output_dir=None, ti
                 shutil.copyfileobj(f_in, f_out)
 
 
-def get_geo_clinical_characteristics(gse: GEOparse.GEOTypes.GSE, output_dir=None):
+def get_geo_clinical_characteristics(gse: GEOparse.GEOTypes.GSE, output_file=None):
     """
     Parse clinical data (ch1 characteristics of each sample) from a GEO accession.
 
     Args:
         gse (GEOparse.GEOTypes.GSE): The GEO series object.
-        output_dir (str, Optional): The directory to save the clinical data.
-                                    Defaults to None (save to current working directory).
+        output_file (str, Optional): The file to save the clinical data. Defaults to None.
+            If None, file is saved to {accession}_clinical_data.tsv in current working directory.
     """
 
     characteristics = {sample: gse.gsms[sample].metadata["characteristics_ch1"]
@@ -280,10 +280,10 @@ def get_geo_clinical_characteristics(gse: GEOparse.GEOTypes.GSE, output_dir=None
     clinical_df.columns = columns
 
     # Save the clinical data to a file
-    if output_dir is None:
-        output_dir = os.getcwd()
+    if output_file is None:
+        output_file = os.path.join(os.getcwd(), f"{gse.name}_clinical_data.tsv")
 
-    clinical_df.to_csv(os.path.join(output_dir, f"{gse.name}_clinical_data.tsv"), sep='\t')
+    clinical_df.to_csv(output_file, sep='\t')
 
 
 def weighted_average_group(df, weights):
