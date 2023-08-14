@@ -1,4 +1,4 @@
-from typing import Union, Iterable
+from typing import Iterable
 import subprocess
 import shutil
 import os.path
@@ -7,10 +7,6 @@ import pkg_resources
 import requests
 import pandas as pd
 import mygene
-
-
-CORE_MATRISOME_URL = "https://www.gsea-msigdb.org/gsea/msigdb/human/download_geneset.jsp?geneSetName=NABA_CORE_MATRISOME&fileType=json"
-ALL_MATRISOME_URL = "https://www.gsea-msigdb.org/gsea/msigdb/human/download_geneset.jsp?geneSetName=NABA_MATRISOME&fileType=json"
 
 
 def normalize_microarray(input_dir, output_file, remove_cel_dir=False):
@@ -80,27 +76,26 @@ def get_genes_from_file(filename):
     return genes
 
 
-def get_matrisome_genes(core_matrisome_only=False):
-    """Retrieve the human matrisome genes from MSigDB.
+def get_genes_from_msig_set(gene_set_name, species="human"):
+    """Fetches the genes associated with a given gene set name from the MSigDB.
+
+    This function constructs a URL for the specified gene set name and species, then performs a GET request to fetch
+    the associated genes in JSON format from the Molecular Signatures Database (MSigDB).
 
     Args:
-        core_matrisome_only (bool, optional): If True, only retrieve the core matrisome genes.
-            Defaults to False.
+        gene_set_name (str): The name of the gene set for which to fetch the associated genes.
+        species (str, optional): The species for which to fetch the gene set. Defaults to "human".
 
     Returns:
-        list: List of matrisome gene symbols.
-    """
-    if core_matrisome_only:
-        url = CORE_MATRISOME_URL
-        field = "NABA_CORE_MATRISOME"
-    else:
-        url = ALL_MATRISOME_URL
-        field = "NABA_MATRISOME"
+        list[str]: A list of gene symbols associated with the specified gene set name.
 
+    Raises:
+        HTTPError: If the GET request to the MSigDB results in an error.
+    """
+    url = f"https://www.gsea-msigdb.org/gsea/msigdb/{species}/download_geneset.jsp?geneSetName={gene_set_name}&fileType=json"
     response = requests.get(url, timeout=10)
     response.raise_for_status()
-    matrisome_genes = response.json()[field]["geneSymbols"]
-    return matrisome_genes
+    return response.json()[gene_set_name]["geneSymbols"]
 
 
 def convert_genes(genes: Iterable, in_format: str, out_format: str, species: str="human",
@@ -151,7 +146,7 @@ def select_rows(df, values, column=None):
                                           "GSM5678": [1.234, 2.345, 3.456, 4.567]})
         >>> expression_df.index = ["A1BG", "A2M", "CA10", "SEMA6B"]
         >>> expression_df.index.name = "symbol"
-        >>> matrisome_genes = tdq.preprocess.get_matrisome_genes()
+        >>> matrisome_genes = tdq.preprocess.get_genes_from_msig_set("NABA_MATRISOME")
         >>> matrisome_expression_df = tdq.preprocess.select_rows(expression_df, matrisome_genes)
         >>> matrisome_expression_df
                 GSM1234 GSM5678
