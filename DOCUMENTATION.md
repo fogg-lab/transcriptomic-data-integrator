@@ -12,7 +12,6 @@
 
 
 
-
 ---
 
 <a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L18"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
@@ -447,6 +446,7 @@ Clean the sample columns of a GEO expression matrix.
 
 
 
+
 **Global Variables**
 ---------------
 - **CORE_MATRISOME_URL**
@@ -454,7 +454,7 @@ Clean the sample columns of a GEO expression matrix.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L14"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L16"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `normalize_microarray`
 
@@ -475,7 +475,7 @@ Normalize microarray expression data given a directory containing CEL.gz files.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L31"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L33"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `normalize_rnaseq`
 
@@ -496,7 +496,7 @@ Normalize RNA-seq expression data given a file containing raw counts.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L49"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L51"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `normalize`
 
@@ -518,7 +518,7 @@ Normalize microarray or RNASeq expression data.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L66"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L68"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_genes_from_file`
 
@@ -543,7 +543,7 @@ Read genes from a text file with one gene symbol per line.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L81"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L83"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_matrisome_genes`
 
@@ -568,7 +568,42 @@ Retrieve the human matrisome genes from MSigDB.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L103"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L105"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
+## <kbd>function</kbd> `convert_genes`
+
+```python
+convert_genes(
+    genes: Iterable,
+    in_format: str,
+    out_format: str,
+    species: str = 'human',
+    returnall: bool = False
+)
+```
+
+Converts a list of genes between formats 'entrezgene', 'ensembl.gene', and 'symbol'. 
+
+
+
+**Args:**
+ 
+ - <b>`genes`</b> (Union[List, pd.Series]):  A list of genes. 
+ - <b>`in_format`</b> (str):  The format of the input genes. 
+ - <b>`out_format`</b> (str):  The format of the output genes. 
+ - <b>`species`</b> (str, optional):  The species of the genes. Defaults to "human". 
+ - <b>`returnall`</b> (bool, optional):  Whether to return return complete lists of duplicate  or missing query terms. Defaults to False. 
+
+
+
+**Returns:**
+ 
+ - <b>`pd.DataFrame`</b>:  A dataframe of results from the mygene.info query. 
+
+
+---
+
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L136"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `select_rows`
 
@@ -612,7 +647,7 @@ Select rows in DataFrame.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L134"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L167"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `drop_nan_row_indices`
 

@@ -1,3 +1,4 @@
+from typing import Union, Iterable
 import subprocess
 import shutil
 import os.path
@@ -5,6 +6,7 @@ import os.path
 import pkg_resources
 import requests
 import pandas as pd
+import mygene
 
 
 CORE_MATRISOME_URL = "https://www.gsea-msigdb.org/gsea/msigdb/human/download_geneset.jsp?geneSetName=NABA_CORE_MATRISOME&fileType=json"
@@ -98,6 +100,37 @@ def get_matrisome_genes(core_matrisome_only=False):
     response.raise_for_status()
     matrisome_genes = response.json()[field]["geneSymbols"]
     return matrisome_genes
+
+
+def convert_genes(genes: Iterable, in_format: str, out_format: str, species: str="human",
+                  returnall: bool=False):
+    """Converts a list of genes between formats 'entrezgene', 'ensembl.gene', and 'symbol'.
+
+    Args:
+        genes (Union[List, pd.Series]): A list of genes.
+        in_format (str): The format of the input genes.
+        out_format (str): The format of the output genes.
+        species (str, optional): The species of the genes. Defaults to "human".
+        returnall (bool, optional): Whether to return return complete lists of duplicate
+            or missing query terms. Defaults to False.
+
+    Returns:
+        pd.DataFrame: A dataframe of results from the mygene.info query.
+    """
+    # Validate in_format and out_format
+    valid_formats = ["entrezgene", "ensembl.gene", "symbol"]
+    given_invalid = [f for f in [in_format, out_format] if f not in valid_formats]
+    if len(given_invalid) > 0:
+        raise ValueError(f"Invalid format(s) given: {given_invalid}. Valid formats: {valid_formats}")
+    elif in_format == out_format:
+        print("Input and output formats are the same. Returning input genes.")
+        return genes
+
+    mg = mygene.MyGeneInfo()
+    out = mg.querymany(genes, scopes=in_format, fields=out_format, species=species,
+                       as_dataframe=True, returnall=returnall)
+
+    return out
 
 
 def select_rows(df, values, column=None):

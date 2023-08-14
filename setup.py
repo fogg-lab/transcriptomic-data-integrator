@@ -12,6 +12,7 @@ setup(
         "GEOparse",
         "pandas",
         "requests",
+        "mygene"
     ],
     package_data={
         PACKAGE_NAME: ["rscripts/*.R"],
