@@ -598,7 +598,7 @@ Converts a list of genes between formats 'entrezgene', 'ensembl.gene', and 'symb
 
 **Returns:**
  
- - <b>`pd.DataFrame`</b>:  A dataframe of results from the mygene.info query. 
+ - <b>`pd.Series`</b>:  Query results. Index is the input genes, values are the output genes.
 
 
 ---

@@ -84,7 +84,8 @@ def get_matrisome_genes(core_matrisome_only=False):
     """Retrieve the human matrisome genes from MSigDB.
 
     Args:
-        core_matrisome_only (bool, optional): If True, only retrieve the core matrisome genes. Defaults to False.
+        core_matrisome_only (bool, optional): If True, only retrieve the core matrisome genes.
+            Defaults to False.
 
     Returns:
         list: List of matrisome gene symbols.
@@ -103,7 +104,7 @@ def get_matrisome_genes(core_matrisome_only=False):
 
 
 def convert_genes(genes: Iterable, in_format: str, out_format: str, species: str="human",
-                  returnall: bool=False):
+                  returnall: bool=False) -> pd.Series:
     """Converts a list of genes between formats 'entrezgene', 'ensembl.gene', and 'symbol'.
 
     Args:
@@ -115,7 +116,7 @@ def convert_genes(genes: Iterable, in_format: str, out_format: str, species: str
             or missing query terms. Defaults to False.
 
     Returns:
-        pd.DataFrame: A dataframe of results from the mygene.info query.
+        pd.Series: Query results. Index is the input genes, values are the output genes.
     """
     # Validate in_format and out_format
     valid_formats = ["entrezgene", "ensembl.gene", "symbol"]
@@ -124,13 +125,13 @@ def convert_genes(genes: Iterable, in_format: str, out_format: str, species: str
         raise ValueError(f"Invalid format(s) given: {given_invalid}. Valid formats: {valid_formats}")
     elif in_format == out_format:
         print("Input and output formats are the same. Returning input genes.")
-        return genes
+        return pd.Series(genes, index=genes)
 
     mg = mygene.MyGeneInfo()
     out = mg.querymany(genes, scopes=in_format, fields=out_format, species=species,
                        as_dataframe=True, returnall=returnall)
 
-    return out
+    return out[out_format]
 
 
 def select_rows(df, values, column=None):
