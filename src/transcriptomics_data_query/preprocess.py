@@ -77,7 +77,7 @@ def get_genes_from_file(filename):
 
 
 def get_genes_from_msig_set(gene_set_name, species="human"):
-    """Fetches the genes associated with a given gene set name from the MSigDB.
+    """Fetches the genes associated with a given gene set name from the MSigDB (e.g, NABA_MATRISOME).
 
     This function constructs a URL for the specified gene set name and species, then performs a GET request to fetch
     the associated genes in JSON format from the Molecular Signatures Database (MSigDB).
