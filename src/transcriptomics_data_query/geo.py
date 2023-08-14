@@ -282,7 +282,8 @@ def get_geo_clinical_characteristics(gse: GEOparse.GEOTypes.GSE, output_file=Non
     # Add other potentially useful metadata
     for field in ["title", "description", "source_name_ch1"]:
         try:
-            field_values = {sample: gse.gsms[sample].metadata[field] for sample in gse.gsms}
+            field_values = {sample: " // ".join(gse.gsms[sample].metadata[field])
+                            for sample in gse.gsms}
             clinical_df[field] = pd.Series(field_values)
         except KeyError:
             pass
