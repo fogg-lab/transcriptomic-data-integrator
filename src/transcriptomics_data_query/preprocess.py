@@ -28,59 +28,25 @@ def normalize_microarray(input_dir, output_file, remove_cel_dir=False):
         shutil.rmtree(input_dir)
 
 
-def normalize_rnaseq(expression_file, clinical_file, output_file, norm_method="mrn",
-                     design_col=None):
+def normalize_rnaseq(expression_file, clinical_file, output_file):
     """Normalize RNA-seq expression data given a file containing raw counts.
 
     Args:
         expression_file (str): Path to the input file containing raw counts.
         clinical_file (str): Path to the input file containing clinical data.
         output_file (str): Path to the output file.
-        norm_method (str, optional): Normalization method (tmm or mrn).
-                                     Defaults to "mrn".
     """
     r_script_path = pkg_resources.resource_filename('transcriptomics_data_query',
                                                     'rscripts/rnaseq_normalization.R')
 
-    # Validate normalization method
-    if not isinstance(norm_method, str):
-        raise TypeError("Normalization method must be a string.")
+    command = ["Rscript", r_script_path, expression_file, clinical_file, output_file]
 
-    norm_method = norm_method.lower()
-
-    if norm_method not in ("tmm", "mrn"):
-        raise ValueError("Invalid normalization method. Must be 'tmm' or 'mrn'.")
-
-    if norm_method == "tmm" and design_col is None:
-        # Read clinical data
-        clinical_data = pd.read_csv(clinical_file, sep='\t')
-
-        # Check the clinical data structure
-        if len(clinical_data.columns) <= 1:
-            raise ValueError("Clinical data must contain more than 1 column.")
-
-        if clinical_data.columns[0] != "sample_id":
-            raise ValueError("The first column of the clinical data must be named 'sample_id'.")
-
-        # List column options, excluding "sample_id"
-        design_columns = [col for col in clinical_data.columns if col != "sample_id"]
-
-        print("Available columns for design formula:")
-        for idx, col_name in enumerate(design_columns):
-            print(f"{idx}: {col_name}")
-
-        selected_idx = int(input("Enter the index of the column to use in the design formula: "))
-        design_col = design_columns[selected_idx]
-
-    design_col = str(design_col)    # In case it is a NoneType
-
-    print(f"Executing: Rscript {r_script_path} {norm_method} {expression_file} {clinical_file} {design_col} {output_file}")
-    subprocess.run(["Rscript", r_script_path, norm_method, expression_file, clinical_file,
-                    design_col, output_file], check=True)
+    print(f"Executing: {' '.join(command)}")
+    subprocess.run(command, check=True)
     print("Normalization complete.")
 
 
-def normalize(input_path, output_file, clinical_file=None, norm_method="mrn", design_col=None):
+def normalize(input_path, output_file, clinical_file=None):
     """Normalize microarray or RNASeq expression data.
 
     Args:
@@ -88,13 +54,13 @@ def normalize(input_path, output_file, clinical_file=None, norm_method="mrn", de
         output_file (str): Path to the output file.
         clinical_file (str, optional): Path to the input file containing clinical data.
             Not required for microarray.
-        norm_method (str, optional): Normalization method employed if data is RNASeq (tmm or mrn).
-            Defaults to "mrn". For microarray, RMA normalization is used.
+        norm_method (str, optional): Normalization method employed if data is RNASeq (tmm or rle).
+            Defaults to "tmm". For microarray, RMA normalization is used.
     """
     if os.path.isdir(input_path):
         normalize_microarray(input_path, output_file, remove_cel_dir=True)
     else:
-        normalize_rnaseq(input_path, clinical_file, output_file, norm_method, design_col)
+        normalize_rnaseq(input_path, clinical_file, output_file)
 
 
 def get_genes_from_file(filename):

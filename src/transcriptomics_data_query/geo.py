@@ -1,4 +1,5 @@
 import re
+from typing import Union
 from functools import wraps
 import urllib.request
 from urllib.error import HTTPError
@@ -310,9 +311,47 @@ def weighted_average_group(df, weights):
 
     return result
 
+def get_gene_mapper(gpl: GEOparse.GEOTypes.GPL) -> dict:
+    """raise exception if annotation not parsable"""
+
+    colnames = gpl.table.columns
+    simplified_colnames = pd.Series(colnames, index=colnames).str.lower().str.replace(' ', '_')
+
+    gene_symbol_indices = simplified_colnames.index[simplified_colnames == "gene_symbol"]
+    if len(gene_symbol_indices) == 1:
+        # There is a gene symbol column
+        key = gene_symbol_indices[0]
+        return gpl.table.set_index('ID')[key].to_dict()
+
+    entrez_indices = simplified_colnames.index[simplified_colnames == "entrez_id"]
+    if len(entrez_indices) == 1:
+        # There is an entrez column
+        key = entrez_indices[0]
+        return gpl.table.set_index('ID')[key].to_dict()
+
+    # Last resort: try to find a column with patterns like "ENS[A-Z]+[0-9]+"
+    pattern = re.compile(r'ENS[A-Z]+[0-9]+')
+    for colname in colnames:
+        first_five_values = gpl.table[colname].head(5)
+        col_is_junk = False
+        for value in first_five_values:
+            if not pattern.match(value):
+                col_is_junk = True
+                break
+        if not col_is_junk:
+            genes_series = gpl.table.set_index('ID')[colname]
+            genes_series = genes_series.str.findall(pattern)
+            genes_series = genes_series.apply(lambda x: ' // '.join(set(x)))
+            return genes_series.to_dict()
+
+    # If above efforts have failed, raise exception.
+    raise ValueError("Could not parse the platform annotation table.")
+
 
 def map_probes_to_genes(expression_df, gse: GEOparse.GEOTypes.GSE):
-    """
+    """Map probes to genes. The identifiers used for genes will either be symbols,
+        Entrez IDs, or Ensembl IDs, depending on what the platform annotation table contains.
+
     Args:
         expression_df (pandas.DataFrame): Expression data.
         gse (GEOparse.GEOTypes.GSE): The GEO series object.
@@ -321,18 +360,18 @@ def map_probes_to_genes(expression_df, gse: GEOparse.GEOTypes.GSE):
         pandas.DataFrame: Expression data with probes mapped to genes.
 
     Notes:
-        This function maps probes to genes using the GPL annotation, then aggregates the expression data
-        for each gene using a weighted average. The weights are calculated as 1 / n, where n is the number
-        of genes associated with each probe. This is performed to avoid biasing the average towards probes
-        with more genes.
+        This function maps probes to genes using the platform annotation, then aggregates the
+        expression data for each gene using a weighted average. The weights are calculated
+        as 1 / n, where n is the number of genes associated with each probe. This is performed
+        to avoid biasing the average towards probes with more genes.
     """
     platform_id = gse.gpls[list(gse.gpls.keys())[0]].get_accession()
     gpl = GEOparse.get_GEO(geo=platform_id)
 
-    annotation = gpl.table.set_index('ID')['Gene Symbol'].to_dict()
-    expression_df.index = expression_df.index.map(annotation)
-    expression_df = expression_df.loc[expression_df.index.dropna()]
+    annotation_mapper = get_gene_mapper(gpl)
 
+    expression_df.index = expression_df.index.map(annotation_mapper)
+    expression_df = expression_df.loc[expression_df.index.dropna()]
     expression_df = expression_df.groupby(expression_df.index).mean()
     expanded_genes = expression_df.index.str.split(' /// ')
     gene_counts = np.array([len(x) for x in expanded_genes])
