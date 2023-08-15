@@ -61,7 +61,7 @@ def normalize(input_path, output_file, clinical_file=None):
         normalize_rnaseq(input_path, clinical_file, output_file)
 
 
-def get_genes_from_file(filename):
+def load_genes_from_file(filename):
     """Read genes from a text file with one gene symbol per line.
 
     Args:

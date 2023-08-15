@@ -511,10 +511,10 @@ Normalize microarray or RNASeq expression data.
 
 <a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L64"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-## <kbd>function</kbd> `get_genes_from_file`
+## <kbd>function</kbd> `load_genes_from_file`
 
 ```python
-get_genes_from_file(filename)
+load_genes_from_file(filename)
 ```
 
 Read genes from a text file with one gene symbol per line. 
