@@ -28,4 +28,4 @@ configure-ncbi-email YOUR_EMAIL@EXAMPLE.COM
 
 ## Usage
 
-Refer to the documentation(https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/DOCUMENTATION.md) and [Colab notebooks](https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/tree/main/notebooks).
+Refer to the [documentation](https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/DOCUMENTATION.md) and [Colab notebooks](https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/tree/main/notebooks).
