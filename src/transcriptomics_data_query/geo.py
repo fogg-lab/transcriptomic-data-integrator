@@ -362,7 +362,7 @@ def get_gene_mapper(gpl: GEOparse.GEOTypes.GPL) -> dict:
         genes_series = clean_gpl_annotation_column_values(genes_series)
         return genes_series.to_dict()
 
-    # Last resort: try to find a column with patterns like "ENS[A-Z]+[0-9]+"
+    # Last resort: try to find a column with patterns like "ENS[A-Z]+[0-9]+" (Ensembl IDs)
     pattern = re.compile(r'ENS[A-Z]+[0-9]+')
     for colname in colnames:
         first_five_values = gpl.table[colname].head(5)
@@ -413,7 +413,7 @@ def map_probes_to_genes(expression_df, gse: GEOparse.GEOTypes.GSE):
     annotation_mapper = get_gene_mapper(gpl)
     expression_df.index = expression_df.index.map(annotation_mapper)
 
-    expression_df = expression_df[expression_df.index != "nan"]
+    expression_df = expression_df[~expression_df.index.isin(["nan", ""])]
     expression_df = expression_df.groupby(expression_df.index).mean()
     expanded_genes = expression_df.index.astype(str).str.split(' // ')
 
