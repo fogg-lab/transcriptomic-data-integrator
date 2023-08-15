@@ -1,7 +1,7 @@
 <!-- markdownlint-disable -->
 
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 # <kbd>module</kbd> `transcriptomics_data_query.geo`
 
@@ -14,7 +14,7 @@
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L18"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L18"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_entrez_email`
 
@@ -33,7 +33,7 @@ Retrieve the email for NCBI API.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L32"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L32"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `check_entrez_email`
 
@@ -58,7 +58,7 @@ Decorator to check and set the Entrez email if it is None.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L51"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L51"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `accession_from_id`
 
@@ -90,7 +90,7 @@ Retrieve GEO accession given a GEO identifier.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L83"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L83"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `id_from_accession`
 
@@ -121,7 +121,7 @@ Retrieve GEO identifier given a GEO accession.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L109"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L109"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_accessions_from_ids`
 
@@ -154,7 +154,7 @@ Retrieve a list of GEO accessions given a list of GEO identifiers.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L127"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L127"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_study_description`
 
@@ -185,7 +185,7 @@ Retrieve GEO study description given an identifier.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L160"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L160"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_descriptions_from_ids`
 
@@ -217,7 +217,7 @@ Retrieve GEO study description given an identifier.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L180"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L180"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `search_geo`
 
@@ -252,7 +252,7 @@ Retrieve a list of GEO identifiers given a search query.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L210"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L210"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `download_geo_expression_data`
 
@@ -273,7 +273,7 @@ Download raw microarray data or RNASeq counts from a GEO accession.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L252"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L252"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_geo_clinical_characteristics`
 
@@ -293,7 +293,7 @@ Parse clinical data from a GEO accession.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L298"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L298"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `weighted_average_group`
 
@@ -319,7 +319,7 @@ Aggregates groups of rows in a Pandas DataFrame using a weighted average.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L324"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L324"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `clean_gpl_annotation_column_values`
 
@@ -342,7 +342,7 @@ Ensure all values in the annotation column are strings using ' // ' as separator
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L337"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L337"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_gene_mapper`
 
@@ -355,7 +355,7 @@ raise exception if annotation not parsable
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L385"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L385"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `map_probes_to_genes`
 
@@ -387,7 +387,7 @@ Map probes to genes. The identifiers used for genes will either be symbols,  Ent
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L432"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L432"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `extract_gsm`
 
@@ -400,7 +400,7 @@ Extract a GSM sample name from a given string, or return the original string if 
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/geo.py#L437"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/geo.py#L437"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `clean_geo_sample_columns`
 
@@ -432,7 +432,7 @@ Clean the sample columns of a GEO expression matrix.
 <hr style="border:2px solid gray">
 
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/preprocess.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 
 # <kbd>module</kbd> `transcriptomics_data_query.preprocess`
@@ -445,7 +445,7 @@ Clean the sample columns of a GEO expression matrix.
 ---
 
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L12"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/preprocess.py#L12"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `normalize_microarray`
 
@@ -466,7 +466,7 @@ Normalize microarray expression data given a directory containing CEL.gz files.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L29"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/preprocess.py#L29"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `normalize_rnaseq`
 
@@ -487,7 +487,7 @@ Normalize RNA-seq expression data given a file containing raw counts.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L47"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/preprocess.py#L47"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `normalize`
 
@@ -509,7 +509,7 @@ Normalize microarray or RNASeq expression data.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L64"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/preprocess.py#L64"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `load_genes_from_file`
 
@@ -534,7 +534,7 @@ Read genes from a text file with one gene symbol per line.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L79"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/preprocess.py#L79"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_genes_from_msig_set`
 
@@ -568,7 +568,7 @@ This function constructs a URL for the specified gene set name and species, then
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L101"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/preprocess.py#L101"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `convert_genes`
 
@@ -603,7 +603,7 @@ Converts a list of genes between formats 'entrezgene', 'ensembl.gene', and 'symb
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L132"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/preprocess.py#L132"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `select_rows`
 
@@ -647,7 +647,7 @@ Select rows in DataFrame.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/preprocess.py#L163"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/preprocess.py#L163"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `drop_nan_row_indices`
 
@@ -679,7 +679,7 @@ Drop rows where the row index is NaN.
 <hr style="border:2px solid gray">
 
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/util.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/util.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 # <kbd>module</kbd> `transcriptomics_data_query.util`
 
@@ -691,7 +691,7 @@ Drop rows where the row index is NaN.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/util.py#L4"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/util.py#L4"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `is_valid_tar_member`
 
@@ -717,7 +717,7 @@ Check if a tar member is safe to extract. `target_dir` should be an absolute pat
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/src/transcriptomics_data_query/util.py#L17"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomics-data-query/blob/main/src/transcriptomics_data_query/util.py#L17"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `extract_tar`
 
