@@ -12,7 +12,7 @@ Search, retrieve, and prepare transcriptomics data from GEO and GDC (development
 For RMA normalization, you will need to install platform design info packages, such as:
   - [pd.clariom.d.human](https://bioconductor.org/packages/release/data/annotation/html/pd.clariom.d.human.html)
   - [pd.hg.u133.plus.2](https://bioconductor.org/packages/release/data/annotation/html/pd.hg.u133.plus.2.html)
-  - other platform design info packages for different platforms you might encounter
+  - other packages for different platforms you might encounter
 
 These packages can be installed in an R environment by running the script install_r_packages.R. This install script was written for R 4.3.
 
