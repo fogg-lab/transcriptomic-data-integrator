@@ -1,5 +1,5 @@
-# transcriptomics-data-query-and-retrieval
-Search, retrieve, and prepare gene expression data from Gene Expression Omnibus and Genomic Data Commons.
+# transcriptomics-data-query
+A Python package to search, retrieve, and prepare gene expression data from Gene Expression Omnibus and Genomic Data Commons.
 
 The `gdc` module (to query/retrieve data from GDC) is not implemented yet. It is currently in development.
 
