@@ -8,6 +8,7 @@ Search, retrieve, and prepare transcriptomics data from GEO and GDC (development
   - [oligo](https://www.bioconductor.org/packages/release/bioc/html/oligo.html)
   - [readr](https://cran.r-project.org/web/packages/readr/index.html)
   - [sva](https://bioconductor.org/packages/release/bioc/html/sva.html)
+
 For RMA normalization, you will need to install platform design info packages, such as:
   - [pd.clariom.d.human](https://bioconductor.org/packages/release/data/annotation/html/pd.clariom.d.human.html)
   - [pd.hg.u133.plus.2](https://bioconductor.org/packages/release/data/annotation/html/pd.hg.u133.plus.2.html)
