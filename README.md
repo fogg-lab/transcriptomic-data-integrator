@@ -26,6 +26,6 @@ pip install -e .
 configure-ncbi-email YOUR_EMAIL@EXAMPLE.COM
 ```
 
-## Examples
+## Usage
 
-In progress: Colab notebook with examples.
+Refer to the documentation(https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/blob/main/DOCUMENTATION.md) and [Colab notebooks](https://github.com/fogg-lab/transcriptomics-data-query-and-retrieval/tree/main/notebooks).
