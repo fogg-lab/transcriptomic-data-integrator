@@ -1,12 +1,19 @@
-from typing import Iterable
+from typing import Iterable, List
 import subprocess
 import shutil
 import os.path
+import re
 
 import pkg_resources
 import requests
 import pandas as pd
 import mygene
+
+
+R_SCRIPTS_DIR = pkg_resources.resource_filename('transcriptomics_data_query', 'rscripts')
+MICROARRAY_NORMALIZATION_SCRIPT = os.path.join(R_SCRIPTS_DIR, 'rma_normalization.R')
+RNASEQ_NORMALIZATION_SCRIPT = os.path.join(R_SCRIPTS_DIR, 'rnaseq_normalization.R')
+BATCH_CORRECTION_SCRIPT = os.path.join(R_SCRIPTS_DIR, 'batch_correction.R')
 
 
 def normalize_microarray(input_dir, output_file, remove_cel_dir=False):
@@ -15,13 +22,15 @@ def normalize_microarray(input_dir, output_file, remove_cel_dir=False):
     Args:
         input_dir (str): Path to the directory containing CEL.gz files.
         output_file (str): Path to the output file.
-        remove_cel_dir (bool, optional): If True, remove the input directory after normalization. Defaults to False.
+        remove_cel_dir (bool, optional): If True, remove the input directory after normalization.
+            Defaults to False.
     """
-    r_script_path = pkg_resources.resource_filename('transcriptomics_data_query',
-                                                    'rscripts/rma_normalization.R')
-    print(f"Executing: Rscript {r_script_path} {input_dir} {output_file}")
-    subprocess.run(["Rscript", r_script_path, input_dir, output_file], check=True)
-    print("Normalization complete.")
+    command = ["Rscript", MICROARRAY_NORMALIZATION_SCRIPT, input_dir, output_file]
+
+    print(f"Executing: {' '.join(command)}")
+    subprocess.run(command, check=True)
+    print(f"Normalization complete. Output file: {output_file}")
+
     if remove_cel_dir:
         shutil.rmtree(input_dir)
 
@@ -34,14 +43,11 @@ def normalize_rnaseq(expression_file, clinical_file, output_file):
         clinical_file (str): Path to the input file containing clinical data.
         output_file (str): Path to the output file.
     """
-    r_script_path = pkg_resources.resource_filename('transcriptomics_data_query',
-                                                    'rscripts/rnaseq_normalization.R')
-
-    command = ["Rscript", r_script_path, expression_file, clinical_file, output_file]
+    command = ["Rscript", RNASEQ_NORMALIZATION_SCRIPT, expression_file, clinical_file, output_file]
 
     print(f"Executing: {' '.join(command)}")
     subprocess.run(command, check=True)
-    print("Normalization complete.")
+    print(f"Normalization complete. Output file: {output_file}")
 
 
 def normalize(input_path, output_file, clinical_file=None):
@@ -170,3 +176,233 @@ def drop_nan_row_indices(expr_df: pd.DataFrame):
         pandas.DataFrame: The expression matrix with NaN rows dropped.
     """
     return expr_df.loc[expr_df.index.dropna()]
+
+
+def clean_clinical_data(clinical_df: pd.DataFrame, specification: dict, ignore_case: bool=True,
+                        drop_no_match_samples: bool=True) -> (pd.DataFrame, pd.DataFrame):
+    """Get filtered and cleaned clinical data table based on a filter specification.
+        The specification contains column names the patterns to extract values for each column.
+        When multiple patterns match, (e.g. "disease" and "no disease"), the longer match is chosen.
+
+    Args:
+        clinical_df (pd.DataFrame): The clinical data table.
+        specification (dict): The filter specification.
+            Example: `specification={'condition': ['tumor', 'normal'], 'age': [r'\d+']}`
+        ignore_case (bool, optional): Whether to ignore case when matching patterns. Defaults to True.
+        drop_no_match_samples (bool, optional): Whether to drop samples that do not match any patterns
+            for any column. Defaults to True.
+
+    Returns:
+        pd.DataFrame: The filtered and cleaned clinical data table.
+
+    Raises:
+        ValueError: If a column name in the specification is not in the clinical data table.
+        ValueError: If a pattern in the specification is not a valid regular expression.
+        ValueError: If no patterns match one of the values in a column and 
+
+    Example:
+        >>> import transcriptomics_data_query as tdq
+        >>> import pandas as pd
+        >>> clinical_df = pd.DataFrame({
+                "condition": ["cns tumor tissue", "normal tissue", "normal tissue", "tumor tissue"],
+                "age": ["45", "50 yo", "eta: 55 anni", "75 years old"],
+                "organism": ["homosapiens", "homosapiens", "homosapiens", "homosapiens"]},
+                index=["sample1", "sample2", "sample3", "sample4"])
+        >>> clinical_df.index.name = "sample_name"
+        >>> specification = {'condition': ['tumor', 'normal'], 'age': [r'\d+']}
+        >>> cleaned_clinical_df = tdq.preprocess.clean_clinical_data(clinical_df, specification)
+        >>> print(cleaned_clinical_df)
+                        condition patient_age
+            sample_name                      
+            sample1         tumor          45
+            sample2        normal          50
+            sample3        normal          55
+            sample4         tumor          75
+    """
+
+    # Check for non-existing columns
+    for col in specification:
+        if col not in clinical_df.columns:
+            raise ValueError(f"Column {col} not in clinical data table")
+
+    # Function to find the longest first match among patterns
+    def match_longest_pattern(value, patterns):
+        longest_match = ""
+        for pattern in patterns:
+            try:
+                match = re.search(pattern, value, flags=re.IGNORECASE if ignore_case else 0)
+                if match:
+                    match_str = match.group(0)
+                    if len(match_str) > len(longest_match):
+                        longest_match = match_str
+            except re.error:
+                raise ValueError(f"Pattern {pattern} is not a valid regular expression")
+        if not longest_match:
+            if drop_no_match_samples:
+                return None
+            raise ValueError(f"No patterns match one of the values in {value}")
+
+        return longest_match
+
+    cleaned_df = pd.DataFrame(index=clinical_df.index)
+
+    # Apply filter specification to each column
+    for col, patterns in specification.items():
+        cleaned_df[col] = clinical_df[col].apply(match_longest_pattern, patterns=patterns)
+
+    # Drop rows with NaN values
+    print("Dropping samples with column values that do not match any patterns:")
+    print(cleaned_df.index[cleaned_df.isna().any(axis=1)])
+    cleaned_df = cleaned_df.dropna()
+
+    return cleaned_df
+
+
+def join_expression_matrices(expression_dataframes: List[pd.DataFrame]):
+    """Concatenate two expression matrices with the same row names.
+
+    Args:
+        expression_dataframes (list[pd.DataFrame]): A list of expression matrices.
+
+    Returns:
+        pd.DataFrame: The concatenated expression matrix.
+    
+    Raises:
+        ValueError: If the expression matrices do not all have the same index (row names).
+    """
+
+    # Check that all expression matrices have the same index
+    indices = [df.index for df in expression_dataframes]
+    if not all([i.equals(indices[0]) for i in indices]):
+        raise ValueError("Expression matrices do not all have the same index.")
+
+    return pd.concat(expression_dataframes, axis=1)
+
+
+def join_and_batch(expression_dataframes: List[pd.DataFrame],
+                   clinical_dataframes: List[pd.DataFrame]) -> (pd.DataFrame, pd.DataFrame):
+    """Join expression matrices, join the corresponding clinical data tables, and assign batches.
+
+    This function adds a batch column to the joined clinical table and assigns batch numbers.
+    For instance, if we have `batches([expr_df1, expr_df2], [clin_df1, clin_df2])`,
+    samples in `expr_df1`/`clin_df1` are batch 1 and samples in `expr_df2`/`clin_df2` are batch 2.
+
+    Args:
+        expression_dataframes (list[pd.DataFrame]): A list of expression matrices.
+        clinical_dataframes (list[pd.DataFrame]): A list of clinical data tables.
+
+    Returns:
+        pd.DataFrame: The joined expression matrix.
+        pd.DataFrame: The joined clinical data table.
+
+    Raises:
+        ValueError: If the column names in an expression matrix do not match the index (row names)
+            in the clinical data table.
+        ValueError: If the clinical data tables do not all have the same column names.
+
+    Example:
+        >>> import transcriptomics_data_query as tdq
+        >>> import pandas as pd
+        >>> # Dummy expression dataframes
+        >>> expr_df1 = pd.DataFrame({"sample1": [1, 2], "sample2": [3, 4]},
+                                    index=["gene1", "gene2"])
+        >>> expr_df2 = pd.DataFrame({"sample3": [5, 6], "sample4": [7, 8]},
+                                    index=["gene1", "gene2"])
+        >>> expr_df3 = pd.DataFrame({"sample5": [9, 10], "sample6": [11, 12]},
+                                    index=["gene1", "gene2"])
+        >>> # Dummy clinical dataframes
+        >>> clinical_df1 = pd.DataFrame({"condition": ["tumor", "normal"]},
+                                        index=["sample1", "sample2"])
+        >>> clinical_df2 = pd.DataFrame({"condition": ["normal", "tumor"]},
+                                        index=["sample3", "sample4"])
+        >>> clinical_df3 = pd.DataFrame({"condition": ["tumor", "tumor"]},
+                                        index=["sample5", "sample6"])
+        >>> # Lists of expression and clinical dataframes
+        >>> expression_dataframes = [expr_df1, expr_df2, expr_df3]
+        >>> clinical_dataframes = [clinical_df1, clinical_df2, clinical_df3]
+        >>> # Using the batches function
+        >>> expr_joined, clinical_joined = tdq.preprocess.batches(expression_dataframes,
+                                                                  clinical_dataframes)
+        >>> print("Joined Expression Matrix:")
+        >>> print(expr_joined)
+        >>> print("\nJoined Clinical Data Table:")
+        >>> print(clinical_joined)
+            Joined Expression Matrix:
+                   sample1  sample2  sample3  sample4  sample5  sample6
+            gene1        1        3        5        7        9       11
+            gene2        2        4        6        8       10       12
+
+            Joined Clinical Data Table:
+                    condition  batch
+            sample1     tumor      1
+            sample2    normal      1
+            sample3    normal      2
+            sample4     tumor      2
+            sample5     tumor      3
+            sample6     tumor      3
+    """
+    # Check if clinical dataframes have same columns
+    clinical_columns = clinical_dataframes[0].columns
+    if not all([df.columns.equals(clinical_columns) for df in clinical_dataframes]):
+        raise ValueError("Clinical data tables do not all have the same column names.")
+
+    # Validate that expression matrices and clinical data table indices match
+    for i, (expr_df, clin_df) in enumerate(zip(expression_dataframes, clinical_dataframes)):
+        if not expr_df.columns.equals(clin_df.index):
+            colname = expr_df.columns[i]
+            rowname = clin_df.index[i]
+            raise ValueError(f"Column {i} in expression matrix ({colname}) does not match "
+                             f"row {i} in the clinical data table ({rowname}).")
+
+    # Concatenate clinical dataframes and assign batch numbers
+    for i, df in enumerate(clinical_dataframes):
+        df['batch'] = i + 1
+    clinical_df_joined = pd.concat(clinical_dataframes, axis=0)
+
+    # Concatenate expression matrices
+    expression_df_joined = join_expression_matrices(expression_dataframes)
+
+    return expression_df_joined, clinical_df_joined
+
+
+def batch_correction(expression_file: str, clinical_file: str, variable: str, data_type: str,
+                     factor_levels: List[str], output_file: str):
+    """Perform batch correction on expression data
+
+    Args:
+        expression_file (str): Path to the input file containing expression data.
+        clinical_file (str): Path to the input file containing clinical data.
+        variable (str): The column in the clinical data table to use for batch correction.
+        data_type (str): The data type of the expression data (microarray or RNASeq).
+        factor_levels (list[str]): The factor levels of the variable to use for batch correction.
+            This is used to validate that the clinical data table has the correct factor levels.
+        output_file (str): Path to the output file.
+
+    Raises:
+        ValueError: If the clinical data table does not have the correct factor levels.
+        ValueError: If the data type is not "microarray" or "RNASeq".
+        ValueError: If the variable is not in the clinical data table.
+        ValueError: If the column names in the expression data do not match the row names
+            in the clinical data table.
+    """
+
+    if data_type.lower() not in ["microarray", "rnaseq"]:
+        raise ValueError("Invalid data type. Must be either 'microarray' or 'RNASeq'.")
+
+    clinical_data = pd.read_csv(clinical_file, sep='\t', index_col=0)
+    if variable not in clinical_data.columns:
+        raise ValueError(f"Specified condition column '{variable}' not found in clinical data table.")
+
+    if set(clinical_data[variable]) != set(factor_levels):
+        raise ValueError(f"The factor levels in the clinical data table do not match the specified factor levels: {factor_levels}.")
+
+    expression_data = pd.read_csv(expression_file, sep='\t', index_col=0)
+    if set(expression_data.columns) != set(clinical_data.index):
+        raise ValueError("The column names in the expression data do not match the row names in the clinical data table.")
+
+    command = ["Rscript", BATCH_CORRECTION_SCRIPT, data_type, expression_file, clinical_file,
+               variable, output_file]
+
+    print(f"Executing: {' '.join(command)}")
+    subprocess.run(command, check=True)
+    print(f"Batch correction complete. Output file: {output_file}")
