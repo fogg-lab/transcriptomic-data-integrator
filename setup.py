@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-PACKAGE_NAME = "transcriptomics_data_query"
+PACKAGE_NAME = "transcriptomic_data_query"
 
 setup(
     name=PACKAGE_NAME,

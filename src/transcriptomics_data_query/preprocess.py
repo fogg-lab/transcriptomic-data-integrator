@@ -1,3 +1,26 @@
+"""Transcriptomic data preprocessing module.
+
+Functions:
+- normalize_microarray: Normalize microarray expression data in a directory containing CEL.gz files.
+- normalize_rnaseq: Normalize RNA-seq expression data given a file containing raw counts.
+- normalize: Normalize microarray or RNASeq expression data.
+- load_genes_from_file: Read genes from a text file with one gene symbol per line.
+- get_genes_from_msig_set: Fetches genes associated with a given gene set name from MSigDB.
+- convert_genes: Converts a list of genes between different gene identifier formats.
+- select_rows: Select rows in a DataFrame.
+- drop_nan_row_indices: Drop rows where the row index is NaN in an expression matrix.
+- clean_clinical_data: Get filtered and cleaned clinical data table based on a filter specification.
+- join_expression_matrices: Concatenate two or more expression matrices with the same row names.
+- join_and_batch: Join expression matrices, join clinical data tables, and assign batches.
+- batch_correction: Perform batch correction on expression data.
+
+Attributes:
+- R_SCRIPTS_DIR: Directory path containing R scripts for normalization and batch correction.
+- MICROARRAY_NORMALIZATION_SCRIPT: Path to the R script for microarray normalization.
+- RNASEQ_NORMALIZATION_SCRIPT: Path to the R script for RNA-seq normalization.
+- BATCH_CORRECTION_SCRIPT: Path to the R script for batch correction.
+"""
+
 from typing import Iterable, List
 import subprocess
 import shutil
@@ -10,7 +33,7 @@ import pandas as pd
 import mygene
 
 
-R_SCRIPTS_DIR = pkg_resources.resource_filename('transcriptomics_data_query', 'rscripts')
+R_SCRIPTS_DIR = pkg_resources.resource_filename('transcriptomic_data_query', 'rscripts')
 MICROARRAY_NORMALIZATION_SCRIPT = os.path.join(R_SCRIPTS_DIR, 'rma_normalization.R')
 RNASEQ_NORMALIZATION_SCRIPT = os.path.join(R_SCRIPTS_DIR, 'rnaseq_normalization.R')
 BATCH_CORRECTION_SCRIPT = os.path.join(R_SCRIPTS_DIR, 'batch_correction.R')
@@ -145,7 +168,7 @@ def select_rows(df, values, column=None):
         pandas.DataFrame: The selected rows.
 
     Example:
-        >>> import transcriptomics_data_query as tdq
+        >>> import transcriptomic_data_query as tdq
         >>> expression_df = pd.DataFrame({"GSM1234": [3.452, 4.123, 5.678, 6.789],
                                           "GSM5678": [1.234, 2.345, 3.456, 4.567]})
         >>> expression_df.index = ["A1BG", "A2M", "CA10", "SEMA6B"]
@@ -199,7 +222,7 @@ def clean_clinical_data(clinical_df: pd.DataFrame, specification: dict, ignore_c
         ValueError: If no patterns match one of the values in a column and 
 
     Example:
-        >>> import transcriptomics_data_query as tdq
+        >>> import transcriptomic_data_query as tdq
         >>> import pandas as pd
         >>> clinical_df = pd.DataFrame({
                 "condition": ["cns tumor tissue", "normal tissue", "normal tissue", "tumor tissue"],
@@ -299,7 +322,7 @@ def join_and_batch(expression_dataframes: List[pd.DataFrame],
         ValueError: If the clinical data tables do not all have the same column names.
 
     Example:
-        >>> import transcriptomics_data_query as tdq
+        >>> import transcriptomic_data_query as tdq
         >>> import pandas as pd
         >>> # Dummy expression dataframes
         >>> expr_df1 = pd.DataFrame({"sample1": [1, 2], "sample2": [3, 4]},

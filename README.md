@@ -18,7 +18,7 @@ For RMA normalization, you will need to install platform design info packages, s
 
 These packages can be installed in an R environment by running the script install_r_packages.R. This install script was written for R 4.3.
 
-## Setup: Install and configure the `transcriptomics_data_query` package
+## Setup: Install and configure the `transcriptomic_data_query` package
 
 Run the below commands at the command line. Replace dummy email with your email which will be submitted in your GEO queries to the NCBI API.
 ```zsh
