@@ -261,10 +261,30 @@ def get_geo_clinical_characteristics(gse: GEOparse.GEOTypes.GSE, output_file=Non
 
     characteristics = {sample: gse.gsms[sample].metadata["characteristics_ch1"]
                        for sample in gse.gsms}
+
+    # Ensure each list of characteristics is in the format ["characteristic: value", ...]
+    formatted_characteristics = {}
+    for key, values in characteristics.items():
+        new_values = []
+        unknown_counter = 1
+        for value in values:
+            if ':' not in value:
+                value = f"unknown_characteristic_{unknown_counter}: {value}"
+                unknown_counter += 1
+            else:
+                ch_name, ch_value = value.split(":", 1)
+                ch_value = ch_value.replace(':', " // ")
+                value = f"{ch_name}: {ch_value}"
+            new_values.append(value)
+        formatted_characteristics[key] = new_values
+    characteristics = formatted_characteristics
+
     clinical_df = pd.DataFrame.from_dict(characteristics, orient='index')
 
     # Melt the DataFrame to a long format
     clinical_df = clinical_df.melt(ignore_index=False)
+
+
 
     # Split value into key and value parts
     key_values = clinical_df['value'].str.split(': ', expand=True)
