@@ -512,7 +512,6 @@ Normalize microarray or RNASeq expression data.
  - <b>`input_path`</b> (str):  Path to the input file (for RNASeq) or directory (for microarray). 
  - <b>`output_file`</b> (str):  Path to the output file. 
  - <b>`clinical_file`</b> (str, optional):  Path to the input file containing clinical data.  Not required for microarray. 
- - <b>`norm_method`</b> (str, optional):  Normalization method employed if data is RNASeq (tmm or rle).  Defaults to "tmm". For microarray, RMA normalization is used. 
 
 
 ---
