@@ -15,7 +15,7 @@
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L18"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L18"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_entrez_email`
 
@@ -34,7 +34,7 @@ Retrieve the email for NCBI API.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L32"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L32"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `check_entrez_email`
 
@@ -59,7 +59,7 @@ Decorator to check and set the Entrez email if it is None.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L51"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L51"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `accession_from_id`
 
@@ -91,7 +91,7 @@ Retrieve GEO accession given a GEO identifier.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L83"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L83"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `id_from_accession`
 
@@ -122,7 +122,7 @@ Retrieve GEO identifier given a GEO accession.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L109"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L109"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_accessions_from_ids`
 
@@ -155,7 +155,7 @@ Retrieve a list of GEO accessions given a list of GEO identifiers.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L127"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L127"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_study_description`
 
@@ -186,7 +186,7 @@ Retrieve GEO study description given an identifier.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L160"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L160"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_descriptions_from_ids`
 
@@ -218,7 +218,7 @@ Retrieve GEO study description given an identifier.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L180"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L180"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `search_geo`
 
@@ -253,7 +253,7 @@ Retrieve a list of GEO identifiers given a search query.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L210"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L210"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `download_geo_expression_data`
 
@@ -274,7 +274,7 @@ Download raw microarray data or RNASeq counts from a GEO accession.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L252"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L252"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_geo_clinical_characteristics`
 
@@ -294,7 +294,7 @@ Parse clinical data from a GEO accession.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L318"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L318"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `weighted_average_group`
 
@@ -320,7 +320,7 @@ Aggregates groups of rows in a Pandas DataFrame using a weighted average.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L344"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L344"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `clean_gpl_annotation_column_values`
 
@@ -343,7 +343,7 @@ Ensure all values in the annotation column are strings using ' // ' as separator
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L357"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L357"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_gene_mapper`
 
@@ -356,7 +356,7 @@ raise exception if annotation not parsable
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L405"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L405"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `map_probes_to_genes`
 
@@ -388,7 +388,7 @@ Map probes to genes. The identifiers used for genes will either be symbols,  Ent
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L452"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L452"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `extract_gsm`
 
@@ -401,7 +401,7 @@ Extract a GSM sample name from a given string, or return the original string if 
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/geo.py#L457"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/geo.py#L457"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `clean_geo_sample_columns`
 
@@ -435,25 +435,33 @@ Clean the sample columns of a GEO expression matrix.
 
 <a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/preprocess.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
 # <kbd>module</kbd> `transcriptomic_data_query.preprocess`
-
 
 <details class="collapsible-section" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px;">
   <summary class="collapsible-title" style="cursor: pointer; color: #007bff; font-weight: bold; margin: -10px; padding: 10px;">Expand section</summary>
 
 
 
-**Global Variables**
----------------
-- **R_SCRIPTS_DIR**
-- **MICROARRAY_NORMALIZATION_SCRIPT**
-- **RNASEQ_NORMALIZATION_SCRIPT**
-- **BATCH_CORRECTION_SCRIPT**
+Transcriptomic data preprocessing module. 
+
+Functions: 
+- normalize_microarray: Normalize microarray expression data in a directory containing CEL.gz files. 
+- normalize_rnaseq: Normalize RNA-seq expression data given a file containing raw counts. 
+- normalize: Normalize microarray or RNASeq expression data. 
+- load_genes_from_file: Read genes from a text file with one gene symbol per line. 
+- get_genes_from_msig_set: Fetches genes associated with a given gene set name from MSigDB. 
+- convert_genes: Converts a list of genes between different gene identifier formats. 
+- select_rows: Select rows in a DataFrame. 
+- drop_nan_row_indices: Drop rows where the row index is NaN in an expression matrix. 
+- clean_clinical_data: Get filtered and cleaned clinical data table based on a filter specification. 
+- join_expression_matrices: Concatenate two or more expression matrices with the same row names. 
+- join_and_batch: Join expression matrices, join clinical data tables, and assign batches. 
+- batch_correction: Perform batch correction on expression data. 
+
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/preprocess.py#L19"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/preprocess.py#L42"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `normalize_microarray`
 
@@ -474,7 +482,7 @@ Normalize microarray expression data given a directory containing CEL.gz files.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/preprocess.py#L38"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/preprocess.py#L61"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `normalize_rnaseq`
 
@@ -495,7 +503,7 @@ Normalize RNA-seq expression data given a file containing raw counts.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/preprocess.py#L53"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/preprocess.py#L76"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `normalize`
 
@@ -516,7 +524,7 @@ Normalize microarray or RNASeq expression data.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/preprocess.py#L70"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/preprocess.py#L91"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `load_genes_from_file`
 
@@ -541,7 +549,7 @@ Read genes from a text file with one gene symbol per line.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/preprocess.py#L85"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/preprocess.py#L106"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `get_genes_from_msig_set`
 
@@ -575,7 +583,7 @@ This function constructs a URL for the specified gene set name and species, then
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/preprocess.py#L107"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/preprocess.py#L128"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `convert_genes`
 
@@ -610,7 +618,7 @@ Converts a list of genes between formats 'entrezgene', 'ensembl.gene', and 'symb
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/preprocess.py#L138"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/preprocess.py#L159"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `select_rows`
 
@@ -654,7 +662,7 @@ Select rows in DataFrame.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/preprocess.py#L169"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/preprocess.py#L190"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `drop_nan_row_indices`
 
@@ -679,7 +687,7 @@ Drop rows where the row index is NaN.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/preprocess.py#L181"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/preprocess.py#L202"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `clean_clinical_data`
 
@@ -700,7 +708,7 @@ Get filtered and cleaned clinical data table based on a filter specification.  T
  
  - <b>`clinical_df`</b> (pd.DataFrame):  The clinical data table. 
  - <b>`specification`</b> (dict):  The filter specification. 
- - <b>`Example`</b>:  `specification={'condition': ['tumor', 'normal'], 'patient_age': [r'\d+']}` 
+ - <b>`Example`</b>:  `specification={'condition': ['tumor', 'normal'], 'age': [r'\d+']}` 
  - <b>`ignore_case`</b> (bool, optional):  Whether to ignore case when matching patterns. Defaults to True. 
  - <b>`drop_no_match_samples`</b> (bool, optional):  Whether to drop samples that do not match any patterns  for any column. Defaults to True. 
 
@@ -743,7 +751,7 @@ Get filtered and cleaned clinical data table based on a filter specification.  T
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/preprocess.py#L261"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/preprocess.py#L282"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `join_expression_matrices`
 
@@ -774,7 +782,7 @@ Concatenate two expression matrices with the same row names.
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/preprocess.py#L282"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/preprocess.py#L303"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `join_and_batch`
 
@@ -859,7 +867,7 @@ Joined Clinical Data Table:")
 
 ---
 
-<a href="https://github.com/fogg-lab/transcriptomic-data-query-and-retrieval/blob/main/src/transcriptomic_data_query/preprocess.py#L368"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="https://github.com/fogg-lab/transcriptomic-data-query/blob/main/src/transcriptomic_data_query/preprocess.py#L389"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>function</kbd> `batch_correction`
 
@@ -874,7 +882,7 @@ batch_correction(
 )
 ```
 
-Perform batch correction on expression data 
+Perform batch correction on expression data. 
 
 
 
@@ -898,6 +906,7 @@ Perform batch correction on expression data
 
 
 
+
 </details>
 
 
@@ -911,6 +920,7 @@ Perform batch correction on expression data
 
 <details class="collapsible-section" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px;">
   <summary class="collapsible-title" style="cursor: pointer; color: #007bff; font-weight: bold; margin: -10px; padding: 10px;">Expand section</summary>
+
 
 
 
@@ -959,6 +969,7 @@ Extract a tar file to a target directory.
  - <b>`tar_file`</b> (str):  Path to the tar file. 
  - <b>`target_dir`</b> (str):  Path to the target directory. 
  - <b>`delete_tar`</b> (bool, optional):  If True, delete the tar file after extraction. Defaults to False. 
+
 
 
 
