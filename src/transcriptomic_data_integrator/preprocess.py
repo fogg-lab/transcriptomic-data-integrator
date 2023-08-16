@@ -168,13 +168,13 @@ def select_rows(df, values, column=None):
         pandas.DataFrame: The selected rows.
 
     Example:
-        >>> import transcriptomic_data_integrator as tdq
+        >>> import transcriptomic_data_integrator as tdi
         >>> expression_df = pd.DataFrame({"GSM1234": [3.452, 4.123, 5.678, 6.789],
                                           "GSM5678": [1.234, 2.345, 3.456, 4.567]})
         >>> expression_df.index = ["A1BG", "A2M", "CA10", "SEMA6B"]
         >>> expression_df.index.name = "symbol"
-        >>> matrisome_genes = tdq.preprocess.get_genes_from_msig_set("NABA_MATRISOME")
-        >>> matrisome_expression_df = tdq.preprocess.select_rows(expression_df, matrisome_genes)
+        >>> matrisome_genes = tdi.preprocess.get_genes_from_msig_set("NABA_MATRISOME")
+        >>> matrisome_expression_df = tdi.preprocess.select_rows(expression_df, matrisome_genes)
         >>> matrisome_expression_df
                 GSM1234 GSM5678
         symbol
@@ -222,7 +222,7 @@ def clean_clinical_data(clinical_df: pd.DataFrame, specification: dict, ignore_c
         ValueError: If no patterns match one of the values in a column and 
 
     Example:
-        >>> import transcriptomic_data_integrator as tdq
+        >>> import transcriptomic_data_integrator as tdi
         >>> import pandas as pd
         >>> clinical_df = pd.DataFrame({
                 "condition": ["cns tumor tissue", "normal tissue", "normal tissue", "tumor tissue"],
@@ -231,7 +231,7 @@ def clean_clinical_data(clinical_df: pd.DataFrame, specification: dict, ignore_c
                 index=["sample1", "sample2", "sample3", "sample4"])
         >>> clinical_df.index.name = "sample_name"
         >>> specification = {'condition': ['tumor', 'normal'], 'patient_age': [r'\d+']}
-        >>> cleaned_clinical_df = tdq.preprocess.clean_clinical_data(clinical_df, specification)
+        >>> cleaned_clinical_df = tdi.preprocess.clean_clinical_data(clinical_df, specification)
         >>> print(cleaned_clinical_df)
                         condition patient_age
             sample_name                      
@@ -322,7 +322,7 @@ def join_and_batch(expression_dataframes: List[pd.DataFrame],
         ValueError: If the clinical data tables do not all have the same column names.
 
     Example:
-        >>> import transcriptomic_data_integrator as tdq
+        >>> import transcriptomic_data_integrator as tdi
         >>> import pandas as pd
         >>> # Dummy expression dataframes
         >>> expr_df1 = pd.DataFrame({"sample1": [1, 2], "sample2": [3, 4]},
@@ -342,7 +342,7 @@ def join_and_batch(expression_dataframes: List[pd.DataFrame],
         >>> expression_dataframes = [expr_df1, expr_df2, expr_df3]
         >>> clinical_dataframes = [clinical_df1, clinical_df2, clinical_df3]
         >>> # Using the batches function
-        >>> expr_joined, clinical_joined = tdq.preprocess.batches(expression_dataframes,
+        >>> expr_joined, clinical_joined = tdi.preprocess.batches(expression_dataframes,
                                                                   clinical_dataframes)
         >>> print("Joined Expression Matrix:")
         >>> print(expr_joined)

@@ -34,7 +34,7 @@ Refer to the [documentation](https://github.com/fogg-lab/transcriptomic-data-int
 
 ## Known limitations
 
-- The function `tdq.geo.map_probes_to_genes` is not guaranteed to work on all microarray platform technologies. This is due to differences in how the probe set annotation table is organized between different platform technologies.
-- Other GEO query functions, such as `tdq.geo.get_geo_clinical_characteristics`, can fail if the metadata for the study on GEO is not organized according to how this package expects.
+- The function `tdi.geo.map_probes_to_genes` is not guaranteed to work on all microarray platform technologies. This is due to differences in how the probe set annotation table is organized between different platform technologies.
+- Other GEO query functions, such as `tdi.geo.get_geo_clinical_characteristics`, can fail if the metadata for the study on GEO is not organized according to how this package expects.
 
 If you encounter any problems using the package, please [submit an issue](https://github.com/fogg-lab/transcriptomic-data-integrator/issues/new) to report it.
