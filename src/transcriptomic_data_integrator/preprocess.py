@@ -33,7 +33,7 @@ import pandas as pd
 import mygene
 
 
-R_SCRIPTS_DIR = pkg_resources.resource_filename('transcriptomic_data_query', 'rscripts')
+R_SCRIPTS_DIR = pkg_resources.resource_filename('transcriptomic_data_integrator', 'rscripts')
 MICROARRAY_NORMALIZATION_SCRIPT = os.path.join(R_SCRIPTS_DIR, 'rma_normalization.R')
 RNASEQ_NORMALIZATION_SCRIPT = os.path.join(R_SCRIPTS_DIR, 'rnaseq_normalization.R')
 BATCH_CORRECTION_SCRIPT = os.path.join(R_SCRIPTS_DIR, 'batch_correction.R')
@@ -168,7 +168,7 @@ def select_rows(df, values, column=None):
         pandas.DataFrame: The selected rows.
 
     Example:
-        >>> import transcriptomic_data_query as tdq
+        >>> import transcriptomic_data_integrator as tdq
         >>> expression_df = pd.DataFrame({"GSM1234": [3.452, 4.123, 5.678, 6.789],
                                           "GSM5678": [1.234, 2.345, 3.456, 4.567]})
         >>> expression_df.index = ["A1BG", "A2M", "CA10", "SEMA6B"]
@@ -222,7 +222,7 @@ def clean_clinical_data(clinical_df: pd.DataFrame, specification: dict, ignore_c
         ValueError: If no patterns match one of the values in a column and 
 
     Example:
-        >>> import transcriptomic_data_query as tdq
+        >>> import transcriptomic_data_integrator as tdq
         >>> import pandas as pd
         >>> clinical_df = pd.DataFrame({
                 "condition": ["cns tumor tissue", "normal tissue", "normal tissue", "tumor tissue"],
@@ -322,7 +322,7 @@ def join_and_batch(expression_dataframes: List[pd.DataFrame],
         ValueError: If the clinical data tables do not all have the same column names.
 
     Example:
-        >>> import transcriptomic_data_query as tdq
+        >>> import transcriptomic_data_integrator as tdq
         >>> import pandas as pd
         >>> # Dummy expression dataframes
         >>> expr_df1 = pd.DataFrame({"sample1": [1, 2], "sample2": [3, 4]},

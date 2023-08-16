@@ -1,4 +1,4 @@
-# transcriptomic-data-query
+# transcriptomic-data-integrator
 A Python package to search, retrieve, and prepare gene expression data from Gene Expression Omnibus and Genomic Data Commons.
 
 The `gdc` module (to query/retrieve data from GDC) is not implemented yet. It is currently in development.
@@ -18,23 +18,23 @@ For RMA normalization, you will need to install platform design info packages, s
 
 These packages can be installed in an R environment by running the script install_r_packages.R. This install script was written for R 4.3.
 
-## Setup: Install and configure the `transcriptomic_data_query` package
+## Setup: Install and configure the `transcriptomic_data_integrator` package
 
 Run the below commands at the command line. Replace dummy email with your email which will be submitted in your GEO queries to the NCBI API.
 ```zsh
-git clone https://github.com/fogg-lab/transcriptomic-data-query.git
-cd transcriptomic-data-query
+git clone https://github.com/fogg-lab/transcriptomic-data-integrator.git
+cd transcriptomic-data-integrator
 pip install -e .
 configure-ncbi-email YOUR_EMAIL@EXAMPLE.COM
 ```
 
 ## Usage
 
-Refer to the [documentation](https://github.com/fogg-lab/transcriptomic-data-query/blob/main/DOCUMENTATION.md) and [Colab notebooks](https://github.com/fogg-lab/transcriptomic-data-query/tree/main/notebooks).
+Refer to the [documentation](https://github.com/fogg-lab/transcriptomic-data-integrator/blob/main/DOCUMENTATION.md) and [Colab notebooks](https://github.com/fogg-lab/transcriptomic-data-integrator/tree/main/notebooks).
 
 ## Known limitations
 
 - The function `tdq.geo.map_probes_to_genes` is not guaranteed to work on all microarray platform technologies. This is due to differences in how the probe set annotation table is organized between different platform technologies.
 - Other GEO query functions, such as `tdq.geo.get_geo_clinical_characteristics`, can fail if the metadata for the study on GEO is not organized according to how this package expects.
 
-If you encounter any problems using the package, please [submit an issue](https://github.com/fogg-lab/transcriptomic-data-query/issues/new) to report it.
+If you encounter any problems using the package, please [submit an issue](https://github.com/fogg-lab/transcriptomic-data-integrator/issues/new) to report it.

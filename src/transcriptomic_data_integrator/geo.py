@@ -22,7 +22,7 @@ def get_entrez_email():
     Returns:
         str: The email address read from the email_for_ncbi_tracking.txt file within the package.
     """
-    email_file = pkg_resources.resource_filename('transcriptomic_data_query',
+    email_file = pkg_resources.resource_filename('transcriptomic_data_integrator',
                                                  'email_for_ncbi_tracking.txt')
     with open(email_file, 'r', encoding='utf-8') as file:
         email = file.read().strip()
