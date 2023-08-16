@@ -701,7 +701,7 @@ Get filtered and cleaned clinical data table based on a filter specification.  T
  
  - <b>`clinical_df`</b> (pd.DataFrame):  The clinical data table. 
  - <b>`specification`</b> (dict):  The filter specification. 
- - <b>`Example`</b>:  `specification={'condition': ['tumor', 'normal'], 'age': [r'\d+']}` 
+ - <b>`Example`</b>:  `specification={'condition': ['tumor', 'normal'], 'patient_age': [r'\d+']}` 
  - <b>`ignore_case`</b> (bool, optional):  Whether to ignore case when matching patterns. Defaults to True. 
  - <b>`drop_no_match_samples`</b> (bool, optional):  Whether to drop samples that do not match any patterns  for any column. Defaults to True. 
 
@@ -730,7 +730,7 @@ Get filtered and cleaned clinical data table based on a filter specification.  T
              "organism": ["homosapiens", "homosapiens", "homosapiens", "homosapiens"]},
              index=["sample1", "sample2", "sample3", "sample4"])
     >>> clinical_df.index.name = "sample_name"
-    >>> specification = {'condition': ['tumor', 'normal'], 'age': [r'\d+']}
+    >>> specification = {'condition': ['tumor', 'normal'], 'patient_age': [r'\d+']}
     >>> cleaned_clinical_df = tdq.preprocess.clean_clinical_data(clinical_df, specification)
     >>> print(cleaned_clinical_df)
                      condition patient_age

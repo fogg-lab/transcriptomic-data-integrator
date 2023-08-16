@@ -209,7 +209,7 @@ def clean_clinical_data(clinical_df: pd.DataFrame, specification: dict, ignore_c
                 "organism": ["homosapiens", "homosapiens", "homosapiens", "homosapiens"]},
                 index=["sample1", "sample2", "sample3", "sample4"])
         >>> clinical_df.index.name = "sample_name"
-        >>> specification = {'condition': ['tumor', 'normal'], 'age': [r'\d+']}
+        >>> specification = {'condition': ['tumor', 'normal'], 'patient_age': [r'\d+']}
         >>> cleaned_clinical_df = tdq.preprocess.clean_clinical_data(clinical_df, specification)
         >>> print(cleaned_clinical_df)
                         condition patient_age
@@ -266,7 +266,7 @@ def join_expression_matrices(expression_dataframes: List[pd.DataFrame]):
 
     Returns:
         pd.DataFrame: The concatenated expression matrix.
-    
+
     Raises:
         ValueError: If the expression matrices do not all have the same index (row names).
     """
@@ -367,7 +367,7 @@ def join_and_batch(expression_dataframes: List[pd.DataFrame],
 
 def batch_correction(expression_file: str, clinical_file: str, variable: str, data_type: str,
                      factor_levels: List[str], output_file: str):
-    """Perform batch correction on expression data
+    """Perform batch correction on expression data.
 
     Args:
         expression_file (str): Path to the input file containing expression data.
