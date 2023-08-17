@@ -215,21 +215,21 @@ def search_geo(query, db="gds", max_results=25, exception_on_http_error=False,
         return []
 
 
-def download_geo_expression_data(gse: GEOparse.GEOTypes.GSE, download_dir=None):
+def download_geo_expression_data(gse: GEOparse.GEOTypes.GSE, output_dir=None):
     """
     Download raw microarray data or RNASeq counts from a GEO accession.
 
     Args:
         gse (GEOparse.GEOTypes.GSE): The GEO series object.
-        download_dir (str, optional): The directory to save the expression matrix.
+        output_dir (str, optional): The directory to save the expression matrix.
             Defaults to None. If None, an accession directory is created in the working directory.
     """
     accession = gse.name
 
-    if download_dir is None:
-        download_dir = os.path.join(os.getcwd(), accession)
+    if output_dir is None:
+        output_dir = os.path.join(os.getcwd(), accession)
 
-    download_dir = Path(download_dir)
+    output_dir = Path(output_dir)
 
     study_type = gse.metadata["type"][0]
     if study_type not in STUDY_TYPES.values():
@@ -237,12 +237,12 @@ def download_geo_expression_data(gse: GEOparse.GEOTypes.GSE, download_dir=None):
                          f"\nSupported study types: {STUDY_TYPES.values()}")
 
     # Create output directory if it does not exist
-    if not os.path.exists(download_dir):
-        os.makedirs(download_dir)
-    elif Path(download_dir).is_file():
-        raise ValueError(f"download_dir must be a directory, not a file: {download_dir}")
-    elif os.listdir(download_dir):
-        raise ValueError(f"download_dir must be empty: {download_dir}")
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    elif Path(output_dir).is_file():
+        raise ValueError(f"output_dir must be a directory, not a file: {output_dir}")
+    elif os.listdir(output_dir):
+        raise ValueError(f"output_dir must be empty: {output_dir}")
 
     url = gse.metadata["supplementary_file"][0]
 
@@ -251,19 +251,19 @@ def download_geo_expression_data(gse: GEOparse.GEOTypes.GSE, download_dir=None):
         if study_type == STUDY_TYPES["microarray"]:
             raise ValueError(f"Supplementary file for {accession} is not a raw microarray archive "
                              f"(expected tar of CEL.gz): {url}")
-        raw_file = str(download_dir / f"{accession}.txt.gz")
+        raw_file = str(output_dir / f"{accession}.txt.gz")
     elif url.endswith(".tar"):
         extension = ".tar"
         if study_type == STUDY_TYPES["rnaseq"]:
             raise ValueError(f"Supplementary file for {accession} is not a raw RNASeq counts file "
                              f"(expected txt.gz): {url}")
-        raw_file = str(download_dir / f"{accession}.tar")
+        raw_file = str(output_dir / f"{accession}.tar")
     else:
         raise ValueError(f"Supplementary file for {accession} does not have a supported extension: "
                          f"{url}\nSupported extensions: .tar, .txt.gz")
 
-    raw_file = str(download_dir / f"{accession}{extension}")
-    output_expression_file = str(download_dir / f"{accession}_expression_matrix.tsv")
+    raw_file = str(output_dir / f"{accession}{extension}")
+    output_expression_file = str(output_dir / f"{accession}_expression_matrix.tsv")
 
     with urllib.request.urlopen(url) as response:
         # Read the content and write to the file
@@ -276,17 +276,17 @@ def download_geo_expression_data(gse: GEOparse.GEOTypes.GSE, download_dir=None):
             with open(output_expression_file, "wb") as f_out:
                 shutil.copyfileobj(f_in, f_out)
     else:
-        util.extract_tar(raw_file, str(download_dir), delete_tar=True)
-        cel_gz_files = set(glob(f"{download_dir}/*.CEL.gz"))
+        util.extract_tar(raw_file, str(output_dir), delete_tar=True)
+        cel_gz_files = set(glob(f"{output_dir}/*.CEL.gz"))
         if not cel_gz_files:
-            raise ValueError(f"No CEL.gz files found in {download_dir}")
-        for file in download_dir.iterdir():
+            raise ValueError(f"No CEL.gz files found in {output_dir}")
+        for file in output_dir.iterdir():
             # Clean up any files that are not CEL.gz files
-            if str(download_dir / file.name) not in cel_gz_files:
+            if str(output_dir / file.name) not in cel_gz_files:
                 file.unlink()
 
         # Perform RMA normalization to get expression matrix
-        preprocess.normalize_microarray(str(download_dir), output_expression_file)
+        preprocess.normalize_microarray(str(output_dir), output_expression_file)
 
         # Clean up the CEL.gz files
         for cel_gz_file in cel_gz_files:
