@@ -1,10 +1,13 @@
 import re
+import gzip
 from typing import Union
+from pathlib import Path
 from functools import wraps
 import urllib.request
 from urllib.error import HTTPError
 import os
 import shutil
+from glob import glob
 
 import pkg_resources
 import numpy as np
@@ -13,7 +16,12 @@ from Bio import Entrez
 import GEOparse
 import requests
 
-from . import util
+from . import util, preprocess
+
+STUDY_TYPES = {
+    "rnaseq": "Expression profiling by high throughput sequencing",
+    "microarray": "Expression profiling by array",
+}
 
 def get_entrez_email():
     """
@@ -207,47 +215,82 @@ def search_geo(query, db="gds", max_results=25, exception_on_http_error=False,
         return []
 
 
-def download_geo_expression_data(gse: GEOparse.GEOTypes.GSE, output_dir=None, timeout=10):
+def download_geo_expression_data(gse: GEOparse.GEOTypes.GSE, download_dir=None):
     """
     Download raw microarray data or RNASeq counts from a GEO accession.
 
     Args:
         gse (GEOparse.GEOTypes.GSE): The GEO series object.
-        output_dir (str, optional): The directory to save the raw data.
-                                    Defaults to None (save to current working directory).
-        timeout (int, optional): The timeout in seconds for the HTTP request. Defaults to 10.
+        download_dir (str, optional): The directory to save the expression matrix.
+            Defaults to None. If None, an accession directory is created in the working directory.
     """
     accession = gse.name
-    if output_dir is None:
-        output_dir = os.path.join(os.getcwd(), accession)
+
+    if download_dir is None:
+        download_dir = os.path.join(os.getcwd(), accession)
+
+    download_dir = Path(download_dir)
+
+    study_type = gse.metadata["type"][0]
+    if study_type not in STUDY_TYPES.values():
+        raise ValueError(f"Study type {study_type} is not supported ({accession})"
+                         f"\nSupported study types: {STUDY_TYPES.values()}")
 
     # Create output directory if it does not exist
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    if not os.path.exists(download_dir):
+        os.makedirs(download_dir)
+    elif Path(download_dir).is_file():
+        raise ValueError(f"download_dir must be a directory, not a file: {download_dir}")
+    elif os.listdir(download_dir):
+        raise ValueError(f"download_dir must be empty: {download_dir}")
 
     url = gse.metadata["supplementary_file"][0]
-    is_microarray = url.endswith(".tar")
 
-    if is_microarray:
-        file_path = os.path.join(output_dir, f"{accession}.tar")
+    if url.endswith(".txt.gz"):
+        extension = ".txt.gz"
+        if study_type == STUDY_TYPES["microarray"]:
+            raise ValueError(f"Supplementary file for {accession} is not a raw microarray archive "
+                             f"(expected tar of CEL.gz): {url}")
+        raw_file = str(download_dir / f"{accession}.txt.gz")
+    elif url.endswith(".tar"):
+        extension = ".tar"
+        if study_type == STUDY_TYPES["rnaseq"]:
+            raise ValueError(f"Supplementary file for {accession} is not a raw RNASeq counts file "
+                             f"(expected txt.gz): {url}")
+        raw_file = str(download_dir / f"{accession}.tar")
     else:
-        file_path = os.path.join(output_dir, f"{accession}.txt.gz")
+        raise ValueError(f"Supplementary file for {accession} does not have a supported extension: "
+                         f"{url}\nSupported extensions: .tar, .txt.gz")
+
+    raw_file = str(download_dir / f"{accession}{extension}")
+    output_expression_file = str(download_dir / f"{accession}_expression_matrix.tsv")
 
     with urllib.request.urlopen(url) as response:
         # Read the content and write to the file
-        with open(file_path, 'wb') as file:
+        with open(raw_file, 'wb') as file:
             shutil.copyfileobj(response, file)
 
-    if is_microarray:
-        util.extract_tar(file_path, output_dir, delete_tar=True)
-    else:
-        # extract gz
-        import gzip
-        with gzip.open(file_path, 'rb') as f_in:
-            out_path = os.path.join(output_dir, f"{accession}_expression_matrix.tsv")
-            with open(out_path, 'wb') as f_out:
+    if study_type == STUDY_TYPES["rnaseq"]:
+        # Extract .txt.gz file, expecting it to be tabular data.
+        with gzip.open(raw_file, "rb") as f_in:
+            with open(output_expression_file, "wb") as f_out:
                 shutil.copyfileobj(f_in, f_out)
+    else:
+        util.extract_tar(raw_file, str(download_dir), delete_tar=True)
+        cel_gz_files = set(glob(f"{download_dir}/*.CEL.gz"))
+        if not cel_gz_files:
+            raise ValueError(f"No CEL.gz files found in {download_dir}")
+        for file in download_dir.iterdir():
+            # Clean up any files that are not CEL.gz files
+            if str(download_dir / file.name) not in cel_gz_files:
+                file.unlink()
 
+        # Perform RMA normalization to get expression matrix
+        preprocess.normalize_microarray(str(download_dir), output_expression_file)
+
+        # Clean up the CEL.gz files
+        for cel_gz_file in cel_gz_files:
+            Path(cel_gz_file).unlink()
 
 def get_geo_clinical_characteristics(gse: GEOparse.GEOTypes.GSE, output_file=None):
     """
@@ -283,8 +326,6 @@ def get_geo_clinical_characteristics(gse: GEOparse.GEOTypes.GSE, output_file=Non
 
     # Melt the DataFrame to a long format
     clinical_df = clinical_df.melt(ignore_index=False)
-
-
 
     # Split value into key and value parts
     key_values = clinical_df['value'].str.split(': ', expand=True)
