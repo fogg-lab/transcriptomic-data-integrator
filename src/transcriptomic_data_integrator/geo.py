@@ -492,7 +492,10 @@ def map_probes_to_genes(expression_df, gse: GEOparse.GEOTypes.GSE):
 
 def extract_gsm(column_name: str):
     """Extract a GSM sample name from a given string, or return the original string if not found."""
-    return re.search(r'GSM[0-9]+', column_name).group(0) or column_name
+    match = re.search(r'GSM[0-9]+', column_name)
+    if match:
+        return match.group(0)
+    return column_name
 
 
 def clean_geo_sample_columns(expr_df: pd.DataFrame):
