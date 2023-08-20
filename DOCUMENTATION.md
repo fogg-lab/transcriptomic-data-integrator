@@ -645,20 +645,23 @@ Select rows in DataFrame.
 
 
 **Example:**
- ``` import transcriptomic_data_integrator as tdi```
-    >>> expression_df = pd.DataFrame({"GSM1234": [3.452, 4.123, 5.678, 6.789],
-                                       "GSM5678": [1.234, 2.345, 3.456, 4.567]})
-    >>> expression_df.index = ["A1BG", "A2M", "CA10", "SEMA6B"]
-    >>> expression_df.index.name = "symbol"
-    >>> matrisome_genes = tdi.preprocess.get_genes_from_msig_set("NABA_MATRISOME")
-    >>> matrisome_expression_df = tdi.preprocess.select_rows(expression_df, matrisome_genes)
-    >>> matrisome_expression_df
+```python
+import transcriptomic_data_integrator as tdi
+expression_df = pd.DataFrame({"GSM1234": [3.452, 4.123, 5.678, 6.789],
+                              "GSM5678": [1.234, 2.345, 3.456, 4.567]})
+expression_df.index = ["A1BG", "A2M", "CA10", "SEMA6B"]
+expression_df.index.name = "symbol"
+matrisome_genes = tdi.preprocess.get_genes_from_msig_set("NABA_MATRISOME")
+matrisome_expression_df = tdi.preprocess.select_rows(expression_df, matrisome_genes)
+print(matrisome_expression_df)
+```
+Output:
+```plain
              GSM1234 GSM5678
     symbol
         A2M    4.123   2.345
     SEMA6B    6.789   4.567
-
-
+```
 
 ---
 
@@ -729,25 +732,28 @@ Get filtered and cleaned clinical data table based on a filter specification.  T
 
 
 **Example:**
- ``` import transcriptomic_data_integrator as tdi```
-    >>> import pandas as pd
-    >>> clinical_df = pd.DataFrame({
-             "condition": ["cns tumor tissue", "normal tissue", "normal tissue", "tumor tissue"],
-             "age": ["45", "50 yo", "eta: 55 anni", "75 years old"],
-             "organism": ["homosapiens", "homosapiens", "homosapiens", "homosapiens"]},
-             index=["sample1", "sample2", "sample3", "sample4"])
-    >>> clinical_df.index.name = "sample_name"
-    >>> specification = {'condition': ['tumor', 'normal'], 'patient_age': [r'\d+']}
-    >>> cleaned_clinical_df = tdi.preprocess.clean_clinical_data(clinical_df, specification)
-    >>> print(cleaned_clinical_df)
-                     condition patient_age
-         sample_name                      
-         sample1         tumor          45
-         sample2        normal          50
-         sample3        normal          55
-         sample4         tumor          75
-
-
+```python
+import transcriptomic_data_integrator as tdi
+import pandas as pd
+clinical_df = pd.DataFrame({
+    "condition": ["cns tumor tissue", "normal tissue", "normal tissue", "tumor tissue"],
+    "age": ["45", "50 yo", "eta: 55 anni", "75 years old"],
+    "organism": ["homosapiens", "homosapiens", "homosapiens", "homosapiens"]},
+    index=["sample1", "sample2", "sample3", "sample4"])
+clinical_df.index.name = "sample_name"
+specification = {'condition': ['tumor', 'normal'], 'patient_age': [r'\d+']}
+cleaned_clinical_df = tdi.preprocess.clean_clinical_data(clinical_df, specification)
+print(cleaned_clinical_df)
+```
+Output:
+```plain
+                 condition patient_age
+     sample_name                      
+     sample1         tumor          45
+     sample2        normal          50
+     sample3        normal          55
+     sample4         tumor          75
+```
 
 ---
 
@@ -821,47 +827,50 @@ Join expression matrices, join the corresponding clinical data tables, and assig
 
 
 **Example:**
- ``` import transcriptomic_data_integrator as tdi```
-        >>> import pandas as pd
-        >>> # Dummy expression dataframes
-        >>> expr_df1 = pd.DataFrame({"sample1": [1, 2], "sample2": [3, 4]},
-                                     index=["gene1", "gene2"])
-        >>> expr_df2 = pd.DataFrame({"sample3": [5, 6], "sample4": [7, 8]},
-                                     index=["gene1", "gene2"])
-        >>> expr_df3 = pd.DataFrame({"sample5": [9, 10], "sample6": [11, 12]},
-                                     index=["gene1", "gene2"])
-        >>> # Dummy clinical dataframes
-        >>> clinical_df1 = pd.DataFrame({"condition": ["tumor", "normal"]},
-                                         index=["sample1", "sample2"])
-        >>> clinical_df2 = pd.DataFrame({"condition": ["normal", "tumor"]},
-                                         index=["sample3", "sample4"])
-        >>> clinical_df3 = pd.DataFrame({"condition": ["tumor", "tumor"]},
-                                         index=["sample5", "sample6"])
-        >>> # Lists of expression and clinical dataframes
-        >>> expression_dataframes = [expr_df1, expr_df2, expr_df3]
-        >>> clinical_dataframes = [clinical_df1, clinical_df2, clinical_df3]
-        >>> # Using the batches function
-        >>> expr_joined, clinical_joined = tdi.preprocess.batches(expression_dataframes,
-                                                                   clinical_dataframes)
-        >>> print("Joined Expression Matrix:")
-        >>> print(expr_joined)
-        >>> print("
-Joined Clinical Data Table:")
-        >>> print(clinical_joined)
-             Joined Expression Matrix:
-                    sample1  sample2  sample3  sample4  sample5  sample6
-             gene1        1        3        5        7        9       11
-             gene2        2        4        6        8       10       12
+```python
+import transcriptomic_data_integrator as tdi
+import pandas as pd
+# Dummy expression dataframes
+expr_df1 = pd.DataFrame({"sample1": [1, 2], "sample2": [3, 4]},
+                        index=["gene1", "gene2"])
+expr_df2 = pd.DataFrame({"sample3": [5, 6], "sample4": [7, 8]},
+                        index=["gene1", "gene2"])
+expr_df3 = pd.DataFrame({"sample5": [9, 10], "sample6": [11, 12]},
+                        index=["gene1", "gene2"])
+# Dummy clinical dataframes
+clinical_df1 = pd.DataFrame({"condition": ["tumor", "normal"]},
+                            index=["sample1", "sample2"])
+clinical_df2 = pd.DataFrame({"condition": ["normal", "tumor"]},
+             index=["sample3", "sample4"])
+clinical_df3 = pd.DataFrame({"condition": ["tumor", "tumor"]},
+                            index=["sample5", "sample6"])
+# Lists of expression and clinical dataframes
+expression_dataframes = [expr_df1, expr_df2, expr_df3]
+clinical_dataframes = [clinical_df1, clinical_df2, clinical_df3]
+# Using the batches function
+expr_joined, clinical_joined = tdi.preprocess.batches(expression_dataframes,
+                                                      clinical_dataframes)
+print("Joined Expression Matrix:")
+print(expr_joined)
+print("Joined Clinical Data Table:")
+print(clinical_joined)
+```
+Output:
+```plain
+Joined Expression Matrix:
+       sample1  sample2  sample3  sample4  sample5  sample6
+gene1        1        3        5        7        9       11
+gene2        2        4        6        8       10       12
 
-             Joined Clinical Data Table:
-                     condition  batch
-             sample1     tumor      1
-             sample2    normal      1
-             sample3    normal      2
-             sample4     tumor      2
-             sample5     tumor      3
-             sample6     tumor      3
-    
+Joined Clinical Data Table:
+       condition  batch
+sample1     tumor      1
+sample2    normal      1
+sample3    normal      2
+sample4     tumor      2
+sample5     tumor      3
+sample6     tumor      3
+```
 
 
 
