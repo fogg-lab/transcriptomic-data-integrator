@@ -4,7 +4,7 @@ A Python package to retrieve and prepare gene expression data from Gene Expressi
 The `gdc` module (to retrieve and prepare data from GDC) is not implemented yet. It is currently in development.
 
 ## Prerequisites
-- Python 3.7 or higher.
+- Python 3.9 or higher.
 - To use the functions for normalization or batch correction from the `preprocess` module, install [R](https://www.r-project.org/) and packages:
   - [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html)
   - [oligo](https://www.bioconductor.org/packages/release/bioc/html/oligo.html)
