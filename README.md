@@ -1,7 +1,12 @@
 # transcriptomic-data-integrator
 A Python package to retrieve and prepare gene expression data from Gene Expression Omnibus and Genomic Data Commons.
 
-The `gdc` module (to retrieve and prepare data from GDC) is not implemented yet. It is currently in development.
+**Archived**: This was my earlier attempt to automate common data retrieval and preprocessing tasks for gene expression data. Interested readers might want to check out these other resources instead:
+- https://github.com/alexvpickering/crossmeta
+- https://maayanlab.cloud/archs4/
+- https://jhubiostatistics.shinyapps.io/recount/
+
+The `gdc` module (to retrieve and prepare data from GDC) is not implemented.
 
 ## Prerequisites
 - Python 3.9 or higher.
